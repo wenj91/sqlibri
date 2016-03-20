@@ -85,11 +85,11 @@ public class MainController implements Initializable {
 		table.getItems().clear();
 
 		ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-		for (int i = 0; i < queryResult.getColumnCount(); i++) {
-			final int j = i; // Don't know why wee need that
+		for (int column = 0; column < queryResult.getColumnCount(); column++) {
+			final int j = column;
 
 			TableColumn<ObservableList<String>, String> col = 
-					new TableColumn<>(queryResult.getColumnNames().get(i));
+					new TableColumn<>(queryResult.getColumnNames().get(j));
 
 			col.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get(j).toString()));
 
@@ -200,14 +200,14 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void execute() {
-		QueryResult qr = db.executeQuery(SQLEditor.getText());
-		if (qr.getTableData() != null)
-			qr.getTableData().forEach(System.out::println);
+		QueryResult queryResult = db.executeQuery(SQLEditor.getText());
+		if (queryResult.getTableData() != null)
+			queryResult.getTableData().forEach(System.out::println);
 		loadTables(db.getFile());
-		if (qr.getTableData() != null)
-			loadTableView(qr);
-		if(qr.getExecutionInfo() != null)
-			statusBar.setText(qr.getExecutionInfo());
+		if (queryResult.getTableData() != null)
+			loadTableView(queryResult);
+		if(queryResult.getExecutionInfo() != null)
+			statusBar.setText(queryResult.getExecutionInfo());
 	}
 
 }
