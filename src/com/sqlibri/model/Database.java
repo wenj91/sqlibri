@@ -65,13 +65,13 @@ public class Database {
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(query);) {
 
-			queryResult.setExecutionInfo("AAA");
+			queryResult.setExecutionInfo("No info");
 
 			if (resultSet == null)
 				return queryResult;
 
 			queryResult.setColumnNames(new ArrayList<String>());
-			for (int i = 1; i < resultSet.getMetaData().getColumnCount(); i++) {
+			for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
 				queryResult.getColumnNames().add(resultSet.getMetaData().getColumnName(i));
 			}
 
@@ -82,7 +82,10 @@ public class Database {
 					queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
 				}
 			}
-		} catch (Exception e) {
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 

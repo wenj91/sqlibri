@@ -12,7 +12,7 @@
 	<bottom>
 		<HBox prefHeight="18.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="No queries have been executed yet">
+            <Label fx:id="statusBar" text="No queries have been executed yet">
                <font>
                   <Font name="Droid Sans" size="12.0" />
                </font>

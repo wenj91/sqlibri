@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -44,8 +45,11 @@ public class MainController implements Initializable {
 	private TextArea SQLEditor;
 
 	@FXML
-	private TableView table;
+	private TableView<ObservableList<String>> table;
 
+	@FXML
+	private Label statusBar;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
@@ -76,23 +80,26 @@ public class MainController implements Initializable {
 		dbStructure.setRoot(null);
 	}
 
-	private void loadTableView(QueryResult tableData) {
-		/*
-		 * TODO Implement parsing QueryResult to TableView. Shit below doesn't
-		 * works. (((
-		 */
-		table.setEditable(true);
+	private void loadTableView(QueryResult queryResult) {
+		table.getColumns().clear();
+		table.getItems().clear();
+
 		ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-		for (int i = 0; i < tableData.getColumnNames().size(); i++) {
-			TableColumn col = new TableColumn(tableData.getColumnNames().get(i));
-			col.setCellValueFactory(param -> new SimpleStringProperty(param.toString()));
+		for (int i = 0; i < queryResult.getColumnCount(); i++) {
+			final int j = i; // Don't know why wee need that
+
+			TableColumn<ObservableList<String>, String> col = 
+					new TableColumn<>(queryResult.getColumnNames().get(i));
+
+			col.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get(j).toString()));
+
 			table.getColumns().addAll(col);
 		}
 
-		for (int row = 0; row < tableData.getTableData().size(); row++) {
+		for (int row = 0; row < queryResult.getRowCount(); row++) {
 			ObservableList<String> rowData = FXCollections.observableArrayList();
-			for (int column = 0; column < tableData.getTableData().get(row).size(); column++) {
-				rowData.add(tableData.getTableData().get(row).get(column).toString());
+			for (int column = 0; column < queryResult.getColumnCount(); column++) {
+				rowData.add(queryResult.getTableData().get(row).get(column).toString());
 			}
 			data.add(rowData);
 		}
@@ -197,7 +204,10 @@ public class MainController implements Initializable {
 		if (qr.getTableData() != null)
 			qr.getTableData().forEach(System.out::println);
 		loadTables(db.getFile());
-		loadTableView(qr);
+		if (qr.getTableData() != null)
+			loadTableView(qr);
+		if(qr.getExecutionInfo() != null)
+			statusBar.setText(qr.getExecutionInfo());
 	}
 
 }
