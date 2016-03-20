@@ -37,6 +37,7 @@ jar {
 }
 
 // Running jar file from build/libs
+// NOTE: It's too slow
 // task runJar {
 //   ant.java(jar: jar.archivePath ,fork:true)
 // }
