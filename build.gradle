@@ -7,20 +7,20 @@ def mainClass = "com.sqlibri.App"
 
 repositories {
 	mavenCentral()
-	jcenter()
 }
 
 dependencies {
+	compile 'org.fxmisc.richtext:richtextfx:0.6.10'
 	runtime 'org.xerial:sqlite-jdbc:3.8.11.2'
 }
 
 sourceSets {
     main {
+        resources {
+            srcDir 'src/'
+        }        
         java {
             srcDir 'src/'
-        }
-        resources {
-            srcDir 'src/com/resources'
         }
     }
 }
@@ -28,7 +28,15 @@ sourceSets {
 jar {
   manifest {
     attributes(
-       "Main-Class" : mainClass ,
-      "Class-Path": configurations.compile.collect { it.getName() }.join(' '))
+    	'Implementation-Version': version,
+    	"Main-Class" : mainClass ,
+    	"Class-Path": configurations.compile.collect { it.getName() }.join(' '))
   	}
+	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
 }
+
+// Running jar file from build/libs
+// task runJar {
+//   ant.java(jar: jar.archivePath ,fork:true)
+// }
