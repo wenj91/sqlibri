@@ -1,6 +1,6 @@
 package com.sqlibri;
 
-import com.sqlibri.controller.MainController;
+import com.sqlibri.presenter.AppPersenter;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,11 +21,13 @@ public class App extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass()
 					.getResource("resources/layout/main-layout.fxml"));
 			BorderPane root = (BorderPane) loader.load();
-			MainController controller = (MainController) loader.getController();
-			controller.setStage(primaryStage);
 			
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
+			
+			AppPersenter controller = (AppPersenter) loader.getController();
+			controller.setStage(primaryStage);
+			
 			primaryStage.setTitle("sqlibri");
 			primaryStage.getIcons().add(rootIcon);
 			primaryStage.show();

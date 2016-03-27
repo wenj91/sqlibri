@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.input.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.chart.*?>
@@ -8,11 +9,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sqlibri.controller.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sqlibri.presenter.AppPersenter">
 	<bottom>
 		<HBox prefHeight="18.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="statusBar" text="No queries have been executed yet">
+            <Label fx:id="statusBar" text="No queries have been executed yet.">
                <font>
                   <Font name="Droid Sans" size="12.0" />
                </font>
@@ -45,7 +46,10 @@
 										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 									</padding>
 									<children>
-										<TextArea fx:id="SQLEditor" prefHeight="200.0" prefWidth="200.0" />
+										<TextArea fx:id="SQLEditor" prefHeight="200.0" prefWidth="200.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></TextArea>
 									</children>
 								</StackPane>
 								<StackPane prefHeight="150.0" prefWidth="200.0">
@@ -70,26 +74,50 @@
 					<menus>
 						<Menu mnemonicParsing="false" text="File">
 							<items>
-                        <MenuItem mnemonicParsing="false" onAction="#saveQuery" text="Save Query" />
-                        <MenuItem mnemonicParsing="false" onAction="#loadQuery" text="Load Query" />
-                        <MenuItem mnemonicParsing="false" onAction="#exportCSV" text="Export As CSV" />
+                        <MenuItem onAction="#saveQuery" text="_Save Query">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem onAction="#loadQuery" text="_Load Query">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem onAction="#exportCSV" text="_Export As CSV">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-								<MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
+								<MenuItem onAction="#exit" text="E_xit">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                         <MenuItem mnemonicParsing="false" text="Close" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Database">
 							<items>
-                        <MenuItem mnemonicParsing="false" onAction="#createDb" text="Create" />
-                        <MenuItem mnemonicParsing="false" onAction="#openDb" text="Open" />
+                        <MenuItem mnemonicParsing="false" onAction="#createDb" text="Create">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem onAction="#openDb" text="_Open">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
 								<MenuItem mnemonicParsing="false" onAction="#dropDb" text="Drop" />
-                        <MenuItem mnemonicParsing="false" onAction="#copyDb" text="Copy" />
+                        <MenuItem onAction="#copyDb" text="_Copy">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Help">
 							<items>
-                        <MenuItem mnemonicParsing="false" text="User Guide" />
-								<MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#showUserGuide" text="User Guide">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
+								<MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
 							</items>
 						</Menu>
 					</menus>
@@ -143,7 +171,7 @@
 						</Button>
 						<Button fx:id="execute" mnemonicParsing="false" onAction="#execute">
 							<graphic>
-								<ImageView fx:id="execute" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+								<ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
 									<image>
 										<Image url="com/sqlibri/resources/image/run.png" />
 									</image>

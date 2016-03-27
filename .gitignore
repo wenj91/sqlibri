@@ -4,3 +4,4 @@
 \.settings
 *.db
 *.sql
+/bin/

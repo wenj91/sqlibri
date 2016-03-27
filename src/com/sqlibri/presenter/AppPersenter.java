@@ -1,4 +1,4 @@
-package com.sqlibri.controller;
+package com.sqlibri.presenter;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,9 +7,11 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import com.sqlibri.App;
 import com.sqlibri.model.Database;
 import com.sqlibri.model.QueryResult;
 
@@ -18,7 +20,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,10 +36,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class MainController implements Initializable {
+public class AppPersenter implements Initializable {
 
 	private Stage window;
 
@@ -49,13 +60,28 @@ public class MainController implements Initializable {
 
 	@FXML
 	private Label statusBar;
-	
+
+	@FXML
+	private Button execute;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		SQLEditor.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.F9)
+				execute();
+		});
 	}
 
 	public void setStage(Stage primaryStage) {
 		window = primaryStage;
+	}
+
+	private void showErrorDialog(String title, String header, String content) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+		alert.showAndWait();
 	}
 
 	private void loadTables(File database) {
@@ -84,12 +110,14 @@ public class MainController implements Initializable {
 		table.getColumns().clear();
 		table.getItems().clear();
 
+		if (queryResult.getTableData().size() <= 0)
+			return;
+
 		ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
 		for (int column = 0; column < queryResult.getColumnCount(); column++) {
 			final int j = column;
 
-			TableColumn<ObservableList<String>, String> col = 
-					new TableColumn<>(queryResult.getColumnNames().get(j));
+			TableColumn<ObservableList<String>, String> col = new TableColumn<>(queryResult.getColumnNames().get(j));
 
 			col.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get(j).toString()));
 
@@ -115,22 +143,37 @@ public class MainController implements Initializable {
 		fileChooser.setTitle("Create Database File");
 		File file = fileChooser.showSaveDialog(window);
 
+		if (file == null)
+			return;
+
 		db = new Database(file);
 
 		try {
 			db.connect();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
+		} catch (Exception e) {
+			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
 		}
 
 		loadTables(db.getFile());
-
 	}
 
 	@FXML
 	public void dropDb() {
-		db.drop();
-		clearTables();
+		if (db == null || db.getFile() == null)
+			return;
+
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("DROP DATABASE");
+		alert.setHeaderText("Are really want to drop the database?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			db.drop();
+			clearTables();
+		}
+
 	}
 
 	@FXML
@@ -138,8 +181,14 @@ public class MainController implements Initializable {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Database File");
 		File file = fileChooser.showOpenDialog(window);
-		db = new Database(file);
-		loadTables(db.getFile());
+
+		if (file == null)
+			return;
+
+		if (file != null) {
+			db = new Database(file);
+			loadTables(db.getFile());
+		}
 	}
 
 	@FXML
@@ -148,10 +197,15 @@ public class MainController implements Initializable {
 		fileChooser.setTitle("Open Database File");
 		File file = fileChooser.showSaveDialog(window);
 
+		if (file == null)
+			return;
+
 		try {
 			Files.copy(db.getFile().toPath(), file.toPath());
 		} catch (IOException e) {
-			e.printStackTrace();
+			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+		} catch (Exception e) {
+			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
 		}
 	}
 
@@ -160,10 +214,16 @@ public class MainController implements Initializable {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Query");
 		File file = fileChooser.showSaveDialog(window);
+
+		if (file == null)
+			return;
+
 		try {
 			Files.write(file.toPath(), SQLEditor.getText().getBytes());
 		} catch (IOException e) {
-			e.printStackTrace();
+			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+		} catch (Exception e) {
+			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
 		}
 
 	}
@@ -174,12 +234,17 @@ public class MainController implements Initializable {
 		fileChooser.setTitle("Open Query File");
 		File file = fileChooser.showOpenDialog(window);
 
+		if (file == null)
+			return;
+
 		String query = "";
 
 		try {
 			query = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining());
 		} catch (IOException e) {
-			e.printStackTrace();
+			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+		} catch (Exception e) {
+			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
 		}
 
 		SQLEditor.setText(query);
@@ -200,14 +265,61 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void execute() {
-		QueryResult queryResult = db.executeQuery(SQLEditor.getText());
-		if (queryResult.getTableData() != null)
-			queryResult.getTableData().forEach(System.out::println);
-		loadTables(db.getFile());
-		if (queryResult.getTableData() != null)
-			loadTableView(queryResult);
-		if(queryResult.getExecutionInfo() != null)
-			statusBar.setText(queryResult.getExecutionInfo());
+		if (db == null || db.getFile() == null)
+			return;
+
+		QueryResult queryResult = null;
+		try {
+			queryResult = db.executeQuery(SQLEditor.getText());
+		} catch (SQLException e) {
+			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
+		} catch (Exception e) {
+			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+		}
+
+		if (queryResult != null) {
+			loadTables(db.getFile());
+			if (queryResult.getTableData() != null) {
+				loadTableView(queryResult);
+				queryResult.getTableData().forEach(System.out::println);
+			}
+			if (queryResult.getExecutionInfo() != null) {
+				statusBar.setText(queryResult.getExecutionInfo());
+			}
+		}
+
+	}
+
+	@FXML
+	public void showUserGuide() {
+		Stage userGuide = new Stage();
+		Accordion accordion = null;
+		try {
+			accordion = FXMLLoader.load(App.class.
+					getResource("resources/layout/user-guide.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		userGuide.setScene(new Scene(accordion));
+		userGuide.setTitle("User Guide");
+		userGuide.show();
+	}
+	
+	@FXML
+	public void showAbout() {
+		Stage about = new Stage();
+		AnchorPane aboutPane = null;
+		try {
+			aboutPane = FXMLLoader.load(App.class.
+					getResource("resources/layout/about.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		about.setScene(new Scene(aboutPane));
+		about.setTitle("About");
+		about.setResizable(false);
+		
+		about.show();
 	}
 
 }

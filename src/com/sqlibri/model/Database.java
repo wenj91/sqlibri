@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 
 public class Database {
@@ -58,12 +59,23 @@ public class Database {
 		return tables;
 	}
 
-	public QueryResult executeQuery(String query) {
+	public QueryResult executeQuery(String query) throws SQLException, Exception {
 		QueryResult queryResult = new QueryResult();
 
-		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery(query);) {
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+
+			connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
+			statement = connection.createStatement();
+
+			if (isDML(query)) {
+				resultSet = statement.executeQuery(query);
+			} else {
+				statement.executeUpdate(query);
+			}
 
 			queryResult.setExecutionInfo("No info");
 
@@ -82,14 +94,19 @@ public class Database {
 					queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
 				}
 			}
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+		} finally {
+			if(isDML(query)) {
+				resultSet.close();
+			}
+			statement.close();
+			connection.close();
 		}
 
 		return queryResult;
+	}
+
+	private boolean isDML(String query) {
+		return query.toUpperCase().matches("^\\s*SELECT.*$");
 	}
 
 }
