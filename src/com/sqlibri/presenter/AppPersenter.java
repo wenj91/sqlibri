@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import com.sqlibri.App;
 import com.sqlibri.model.Database;
 import com.sqlibri.model.QueryResult;
+import com.sqlibri.util.CSVParser;
+import com.sqlibri.util.PrettyStatus;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -49,8 +51,8 @@ public class AppPersenter implements Initializable {
 
 	@FXML
 	private TreeView<String> dbStructure;
-	private final String dbIcon = "com/sqlibri/resources/image/database.png";
-	private final String tableIcon = "com/sqlibri/resources/image/table.png";
+	private final String DB_ICON = "com/sqlibri/resources/image/database.png";
+	private final String TABLE_ICON = "com/sqlibri/resources/image/table.png";
 
 	@FXML
 	private TextArea SQLEditor;
@@ -85,11 +87,11 @@ public class AppPersenter implements Initializable {
 	}
 
 	private void loadTables(File database) {
-		Image rootImg = new Image(dbIcon, 16, 16, false, false);
+		Image rootImg = new Image(DB_ICON, 16, 16, false, false);
 		TreeItem<String> rootItem = new TreeItem<String>(database.getName(), new ImageView(rootImg));
 		rootItem.setExpanded(true);
 
-		Image tableImg = new Image(tableIcon, 16, 16, false, false);
+		Image tableImg = new Image(TABLE_ICON, 16, 16, false, false);
 
 		List<String> tables = new Database(database).getAllTables();
 
@@ -166,7 +168,7 @@ public class AppPersenter implements Initializable {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("DROP DATABASE");
-		alert.setHeaderText("Are really want to drop the database?");
+		alert.setHeaderText("Are you really want to drop the database?");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
@@ -256,6 +258,24 @@ public class AppPersenter implements Initializable {
 		 * TODO Implement parsing QueryResult or TableView Observable List to
 		 * CSV format
 		 */
+
+		CSVParser csvParser = new CSVParser();
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Export to CSV");
+		File file = fileChooser.showOpenDialog(window);
+
+		if (file == null)
+			return;
+
+		try {
+			Files.write(file.toPath(), "AAA".getBytes());
+		} catch (IOException e) {
+			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+		} catch (Exception e) {
+			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+		}
+
 	}
 
 	@FXML
@@ -269,10 +289,12 @@ public class AppPersenter implements Initializable {
 			return;
 
 		QueryResult queryResult = null;
+		String query = SQLEditor.getText();
 		try {
-			queryResult = db.executeQuery(SQLEditor.getText());
+			queryResult = db.executeQuery(query);
 		} catch (SQLException e) {
 			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
+			statusBar.setText(PrettyStatus.error(query));
 		} catch (Exception e) {
 			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
 		}
@@ -295,8 +317,7 @@ public class AppPersenter implements Initializable {
 		Stage userGuide = new Stage();
 		Accordion accordion = null;
 		try {
-			accordion = FXMLLoader.load(App.class.
-					getResource("resources/layout/user-guide.fxml"));
+			accordion = FXMLLoader.load(App.class.getResource("resources/layout/user-guide.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -304,21 +325,20 @@ public class AppPersenter implements Initializable {
 		userGuide.setTitle("User Guide");
 		userGuide.show();
 	}
-	
+
 	@FXML
 	public void showAbout() {
 		Stage about = new Stage();
 		AnchorPane aboutPane = null;
 		try {
-			aboutPane = FXMLLoader.load(App.class.
-					getResource("resources/layout/about.fxml"));
+			aboutPane = FXMLLoader.load(App.class.getResource("resources/layout/about.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		about.setScene(new Scene(aboutPane));
 		about.setTitle("About");
 		about.setResizable(false);
-		
+
 		about.show();
 	}
 

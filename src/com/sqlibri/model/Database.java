@@ -7,8 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.List;
+
+import com.sqlibri.util.PrettyStatus;
 
 public class Database {
 
@@ -71,13 +72,15 @@ public class Database {
 			connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
 			statement = connection.createStatement();
 
+			long start = System.currentTimeMillis();
 			if (isDML(query)) {
 				resultSet = statement.executeQuery(query);
 			} else {
 				statement.executeUpdate(query);
 			}
+			long end = System.currentTimeMillis();
 
-			queryResult.setExecutionInfo("No info");
+			queryResult.setExecutionInfo(PrettyStatus.success(query, (end - start)));
 
 			if (resultSet == null)
 				return queryResult;
@@ -95,7 +98,7 @@ public class Database {
 				}
 			}
 		} finally {
-			if(isDML(query)) {
+			if (isDML(query)) {
 				resultSet.close();
 			}
 			statement.close();
