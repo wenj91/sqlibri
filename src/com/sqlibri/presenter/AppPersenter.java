@@ -45,15 +45,18 @@ import javafx.stage.Stage;
 
 public class AppPersenter implements Initializable {
 
+	private final String DB_ICON = "com/sqlibri/resources/image/database.png";
+	private final String TABLE_ICON = "com/sqlibri/resources/image/table.png";
+	
 	private Stage window;
 
 	private Database db;
+	
+	private QueryResult lastResult;
 
 	@FXML
 	private TreeView<String> dbStructure;
-	private final String DB_ICON = "com/sqlibri/resources/image/database.png";
-	private final String TABLE_ICON = "com/sqlibri/resources/image/table.png";
-
+	
 	@FXML
 	private TextArea SQLEditor;
 
@@ -254,13 +257,6 @@ public class AppPersenter implements Initializable {
 
 	@FXML
 	public void exportCSV() {
-		/*
-		 * TODO Implement parsing QueryResult or TableView Observable List to
-		 * CSV format
-		 */
-
-		CSVParser csvParser = new CSVParser();
-
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Export to CSV");
 		File file = fileChooser.showOpenDialog(window);
@@ -269,7 +265,8 @@ public class AppPersenter implements Initializable {
 			return;
 
 		try {
-			Files.write(file.toPath(), "AAA".getBytes());
+			Files.write(file.toPath(), CSVParser.parseToCSV(lastResult.getColumnNames(), 
+					lastResult.getTableData()).getBytes());
 		} catch (IOException e) {
 			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
@@ -288,10 +285,9 @@ public class AppPersenter implements Initializable {
 		if (db == null || db.getFile() == null)
 			return;
 
-		QueryResult queryResult = null;
 		String query = SQLEditor.getText();
 		try {
-			queryResult = db.executeQuery(query);
+			lastResult = db.executeQuery(query);
 		} catch (SQLException e) {
 			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
 			statusBar.setText(PrettyStatus.error(query));
@@ -299,14 +295,14 @@ public class AppPersenter implements Initializable {
 			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
 		}
 
-		if (queryResult != null) {
+		if (lastResult != null) {
 			loadTables(db.getFile());
-			if (queryResult.getTableData() != null) {
-				loadTableView(queryResult);
-				queryResult.getTableData().forEach(System.out::println);
+			if (lastResult.getTableData() != null) {
+				loadTableView(lastResult);
+				lastResult.getTableData().forEach(System.out::println);
 			}
-			if (queryResult.getExecutionInfo() != null) {
-				statusBar.setText(queryResult.getExecutionInfo());
+			if (lastResult.getExecutionInfo() != null) {
+				statusBar.setText(lastResult.getExecutionInfo());
 			}
 		}
 

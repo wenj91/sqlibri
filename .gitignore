@@ -4,4 +4,5 @@
 \.settings
 *.db
 *.sql
+*.csv
 /bin/
