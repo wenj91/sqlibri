@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2"
 def mainClass = "com.sqlibri.App"
 
 repositories {
@@ -10,7 +10,6 @@ repositories {
 }
 
 dependencies {
-	compile 'org.fxmisc.richtext:richtextfx:0.6.10'
 	runtime 'org.xerial:sqlite-jdbc:3.8.11.2'
 }
 
@@ -35,9 +34,3 @@ jar {
 	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 	from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
 }
-
-// Running jar file from build/libs
-// NOTE: It's too slow
-// task runJar {
-//   ant.java(jar: jar.archivePath ,fork:true)
-// }

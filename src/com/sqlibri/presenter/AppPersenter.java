@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import com.sqlibri.App;
+import com.sqlibri.control.editor.SQLEditor;
 import com.sqlibri.model.Database;
 import com.sqlibri.model.QueryResult;
 import com.sqlibri.util.CSVParser;
@@ -33,12 +34,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -47,18 +48,18 @@ public class AppPersenter implements Initializable {
 
 	private final String DB_ICON = "com/sqlibri/resources/image/database.png";
 	private final String TABLE_ICON = "com/sqlibri/resources/image/table.png";
-	
+
 	private Stage window;
 
 	private Database db;
-	
+
 	private QueryResult lastResult;
 
 	@FXML
 	private TreeView<String> dbStructure;
-	
+
 	@FXML
-	private TextArea SQLEditor;
+	private SQLEditor editor;
 
 	@FXML
 	private TableView<ObservableList<String>> table;
@@ -71,14 +72,14 @@ public class AppPersenter implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		SQLEditor.setOnKeyPressed(e -> {
-			if (e.getCode() == KeyCode.F9)
-				execute();
-		});
 	}
 
 	public void setStage(Stage primaryStage) {
 		window = primaryStage;
+		window.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+			if (e.getCode() == KeyCode.F9)
+				execute();
+		});
 	}
 
 	private void showErrorDialog(String title, String header, String content) {
@@ -224,7 +225,7 @@ public class AppPersenter implements Initializable {
 			return;
 
 		try {
-			Files.write(file.toPath(), SQLEditor.getText().getBytes());
+			Files.write(file.toPath(), editor.getCode().getBytes());
 		} catch (IOException e) {
 			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
@@ -252,7 +253,7 @@ public class AppPersenter implements Initializable {
 			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
 		}
 
-		SQLEditor.setText(query);
+		editor.pasteCode(query);
 	}
 
 	@FXML
@@ -265,8 +266,8 @@ public class AppPersenter implements Initializable {
 			return;
 
 		try {
-			Files.write(file.toPath(), CSVParser.parseToCSV(lastResult.getColumnNames(), 
-					lastResult.getTableData()).getBytes());
+			Files.write(file.toPath(),
+					CSVParser.parseToCSV(lastResult.getColumnNames(), lastResult.getTableData()).getBytes());
 		} catch (IOException e) {
 			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
@@ -285,7 +286,7 @@ public class AppPersenter implements Initializable {
 		if (db == null || db.getFile() == null)
 			return;
 
-		String query = SQLEditor.getText();
+		String query = editor.getCode();
 		try {
 			lastResult = db.executeQuery(query);
 		} catch (SQLException e) {
