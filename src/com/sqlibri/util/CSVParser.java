@@ -19,7 +19,7 @@ public class CSVParser {
 
 		columnNames.forEach(e -> {
 			csv.append(e);
-			if (columnNames.indexOf(e) < columnNames.size() - 2)
+			if (columnNames.indexOf(e) < columnNames.size() - 1)
 				csv.append(",");
 		});
 
@@ -29,7 +29,7 @@ public class CSVParser {
 			int index = rowData.indexOf(row);
 			row.forEach(column -> {
 				csv.append(column);
-				if (rowData.get(index).indexOf(column) < rowData.get(index).size() - 2)
+				if (rowData.get(index).indexOf(column) < rowData.get(index).size() - 1)
 					csv.append(",");
 			});
 			csv.append("\n");

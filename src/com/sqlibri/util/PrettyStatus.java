@@ -28,6 +28,7 @@ public class PrettyStatus {
 	}
 	
 	private static String shortenQuery(String query) {
+		query = query.replaceAll("^\\s*", "");
 		if(query.length() > 20) 
 			return query.substring(0, 20) + "...";
 		else

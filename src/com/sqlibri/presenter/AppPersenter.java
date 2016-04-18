@@ -123,7 +123,8 @@ public class AppPersenter implements Initializable {
 		for (int column = 0; column < queryResult.getColumnCount(); column++) {
 			final int j = column;
 
-			TableColumn<ObservableList<String>, String> col = new TableColumn<>(queryResult.getColumnNames().get(j));
+			TableColumn<ObservableList<String>, String> col = 
+					new TableColumn<>(queryResult.getColumnNames().get(j));
 
 			col.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get(j).toString()));
 
@@ -260,14 +261,15 @@ public class AppPersenter implements Initializable {
 	public void exportCSV() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Export to CSV");
-		File file = fileChooser.showOpenDialog(window);
+		File file = fileChooser.showSaveDialog(window);
 
 		if (file == null)
 			return;
 
 		try {
 			Files.write(file.toPath(),
-					CSVParser.parseToCSV(lastResult.getColumnNames(), lastResult.getTableData()).getBytes());
+					CSVParser.parseToCSV(lastResult.getColumnNames(),
+							lastResult.getTableData()).getBytes());
 		} catch (IOException e) {
 			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
@@ -300,7 +302,7 @@ public class AppPersenter implements Initializable {
 			loadTables(db.getFile());
 			if (lastResult.getTableData() != null) {
 				loadTableView(lastResult);
-				lastResult.getTableData().forEach(System.out::println);
+				//lastResult.getTableData().forEach(System.out::println);
 			}
 			if (lastResult.getExecutionInfo() != null) {
 				statusBar.setText(lastResult.getExecutionInfo());

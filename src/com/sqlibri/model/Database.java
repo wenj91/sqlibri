@@ -66,6 +66,8 @@ public class Database {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
+		
+		query = query.replaceAll("\\s+", " ");
 
 		try {
 
