@@ -11,16 +11,27 @@ import java.util.List;
 
 import com.sqlibri.util.PrettyStatus;
 
+/**
+ * All essential operations for working with database
+ */
 public class Database {
 
 	private final String GET_ALL_TABLES = "SELECT name FROM sqlite_master WHERE type='table';";
 
+	//path to database file
 	private File file;
 
+	/**
+	 * @return path to database file
+	 */
 	public File getFile() {
 		return file;
 	}
 
+	/**
+	 * Initializes with path to database file
+	 * @param file path to database file
+	 */
 	public Database(File file) {
 		this.file = file;
 		try {
@@ -30,6 +41,10 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Creates database by given path
+	 * @throws SQLException throws if database cannot be created
+	 */
 	public void connect() throws SQLException {
 		Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
 		try {
@@ -39,10 +54,17 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Drops database (current database file)
+	 */
 	public void drop() {
 		file.delete();
 	}
 
+	/**
+	 * Get all tables from database
+	 * @return all tables
+	 */
 	public List<String> getAllTables() {
 
 		List<String> tables = new ArrayList<>();
@@ -60,6 +82,13 @@ public class Database {
 		return tables;
 	}
 
+	/**
+	 * Executes query 
+	 * @param query to execute
+	 * @return results from executed query
+	 * @throws SQLException throws if there is any error in sql query
+	 * @throws Exception throws if crap happen 
+	 */
 	public QueryResult executeQuery(String query) throws SQLException, Exception {
 		QueryResult queryResult = new QueryResult();
 
@@ -110,6 +139,7 @@ public class Database {
 		return queryResult;
 	}
 
+	// Checks is query is 'SELECT' query
 	private boolean isDML(String query) {
 		return query.toUpperCase().matches("^\\s*SELECT.*$");
 	}

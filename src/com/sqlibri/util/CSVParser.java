@@ -1,9 +1,9 @@
 package com.sqlibri.util;
 
 import java.util.List;
+
 /**
- * @author saka
- * Parse Data for CSV
+ * Parses Data to CSV format
  */
 public class CSVParser {
 

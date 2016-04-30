@@ -44,7 +44,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class AppPersenter implements Initializable {
+/**
+ * Main Stage controller contains all event handler for the main window
+ * and it's responsible for handling all user interactions
+ */
+public class AppPersenter {
 
 	private final String DB_ICON = "com/sqlibri/resources/image/database.png";
 	private final String TABLE_ICON = "com/sqlibri/resources/image/table.png";
@@ -55,33 +59,17 @@ public class AppPersenter implements Initializable {
 
 	private QueryResult lastResult;
 
-	@FXML
-	private TreeView<String> dbStructure;
+	@FXML private TreeView<String> dbStructure;
 
-	@FXML
-	private SQLEditor editor;
+	@FXML private SQLEditor editor;
 
-	@FXML
-	private TableView<ObservableList<String>> table;
+	@FXML private TableView<ObservableList<String>> table;
 
-	@FXML
-	private Label statusBar;
+	@FXML private Label statusBar;
 
-	@FXML
-	private Button execute;
+	@FXML private Button execute;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-	}
-
-	public void setStage(Stage primaryStage) {
-		window = primaryStage;
-		window.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-			if (e.getCode() == KeyCode.F9)
-				execute();
-		});
-	}
-
+	// Shows up error dialog with the following message
 	private void showErrorDialog(String title, String header, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle(title);
@@ -90,6 +78,7 @@ public class AppPersenter implements Initializable {
 		alert.showAndWait();
 	}
 
+	// Loads tables to the database structure tree view
 	private void loadTables(File database) {
 		Image rootImg = new Image(DB_ICON, 16, 16, false, false);
 		TreeItem<String> rootItem = new TreeItem<String>(database.getName(), new ImageView(rootImg));
@@ -108,10 +97,12 @@ public class AppPersenter implements Initializable {
 		dbStructure.setRoot(rootItem);
 	}
 
+	// Deletes all content from database structure tree view
 	private void clearTables() {
 		dbStructure.setRoot(null);
 	}
 
+	// Loads database data to table view
 	private void loadTableView(QueryResult queryResult) {
 		table.getColumns().clear();
 		table.getItems().clear();
@@ -142,8 +133,26 @@ public class AppPersenter implements Initializable {
 
 	}
 
-	@FXML
-	public void createDb() {
+	/**
+	 * Setter for primary stage field,
+	 * which needed to hang event handler on it
+	 * Also, adds all shortcuts events to the given stage
+	 * @param primaryStage 
+	 */
+	public void setStage(Stage primaryStage) {
+		window = primaryStage;
+		window.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+			if (e.getCode() == KeyCode.F9)
+				execute();
+		});
+	}
+
+	// Database menu item event handlers
+	/**
+	 * Create database event handler [Database -> create or Ctrl+N]
+	 * Creates empty database file on the given path
+	 */
+	@FXML public void createDb() {
 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Create Database File");
@@ -165,8 +174,11 @@ public class AppPersenter implements Initializable {
 		loadTables(db.getFile());
 	}
 
-	@FXML
-	public void dropDb() {
+	/**
+	 * Drop database event handler [Database -> drop]
+	 * Drops opened database
+	 */
+	@FXML public void dropDb() {
 		if (db == null || db.getFile() == null)
 			return;
 
@@ -182,8 +194,12 @@ public class AppPersenter implements Initializable {
 
 	}
 
-	@FXML
-	public void openDb() {
+	/**
+	 * Open database event handler [Database -> open or Ctrl+O]
+	 * Opens database file from given path and loads tables to database structure
+	 * tree view
+	 */
+	@FXML public void openDb() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Database File");
 		File file = fileChooser.showOpenDialog(window);
@@ -194,8 +210,11 @@ public class AppPersenter implements Initializable {
 		}
 	}
 
-	@FXML
-	public void copyDb() {
+	/**
+	 * Copy database event handler [Database -> copy]
+	 * Copies opened database to new database file
+	 */
+	@FXML	public void copyDb() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Database File");
 		File file = fileChooser.showSaveDialog(window);
@@ -212,8 +231,12 @@ public class AppPersenter implements Initializable {
 		}
 	}
 
-	@FXML
-	public void saveQuery() {
+	// File menu item event handlers
+	/**
+	 * Save Query event handler [File -> Save Query or Ctrl+S]
+	 * Saves query from SQL editor to given file
+	 */
+	@FXML	public void saveQuery() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Query");
 		File file = fileChooser.showSaveDialog(window);
@@ -231,8 +254,11 @@ public class AppPersenter implements Initializable {
 
 	}
 
-	@FXML
-	public void loadQuery() {
+	/**
+	 * Load Query event handler [File -> Load Query or Ctrl+Shift+O]
+	 * Loads query from given file to SQL editor
+	 */
+	@FXML	public void loadQuery() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Query File");
 		File file = fileChooser.showOpenDialog(window);
@@ -253,8 +279,11 @@ public class AppPersenter implements Initializable {
 		editor.pasteCode(query);
 	}
 
-	@FXML
-	public void exportCSV() {
+	/**
+	 * Export As CSV event handler [File -> Export As CSV or Ctrl+E]
+	 * Export data from table view to csv file by given path
+	 */
+	@FXML public void exportCSV() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Export to CSV");
 		File file = fileChooser.showSaveDialog(window);
@@ -273,13 +302,22 @@ public class AppPersenter implements Initializable {
 
 	}
 
-	@FXML
-	public void exit() {
+	/**
+	 * Exit event handler [File -> Exit or Ctrl+X]
+	 * Exits from the application
+	 */
+	@FXML	public void exit() {
 		Platform.exit();
 	}
 
-	@FXML
-	public void execute() {
+	/**
+	 * Execute button event handler [F9]
+	 * Sends query from SQL editor to SQLLite database and returns database response
+	 * if it's data then renders it to table view
+	 * if it's error message then shows error dialog
+	 * else updates just executes query and updates status bar
+	 */
+	@FXML	public void execute() {
 		if (db == null || db.getFile() == null)
 			return;
 
@@ -305,8 +343,12 @@ public class AppPersenter implements Initializable {
 
 	}
 
-	@FXML
-	public void showUserGuide() {
+	// Help menu item event handlers
+	/**
+	 * User Guide event handler [Help -> User GUide or Ctrl+Shift+H]
+	 * Opens User Guide stage
+	 */
+	@FXML	public void showUserGuide() {
 		Stage userGuide = new Stage();
 		Accordion accordion = null;
 		try {
@@ -319,8 +361,11 @@ public class AppPersenter implements Initializable {
 		userGuide.show();
 	}
 
-	@FXML
-	public void showAbout() {
+	/**
+	 * About event handler [Help -> About]
+	 * Opens Help stage
+	 */
+	@FXML public void showAbout() {
 		Stage about = new Stage();
 		AnchorPane aboutPane = null;
 		try {

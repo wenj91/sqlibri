@@ -9,12 +9,15 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Main class - launches the application
+ */
 public class App extends Application {
 
 	// Application Icon
-	private final Image rootIcon = new Image("com/sqlibri/resources/image/sqlibri.png");
+	private final Image rootIcon = new Image(getClass()
+			.getResource("resources/image/sqlibri.png").toExternalForm());
 	
-
 	@Override
 	public void start(Stage primaryStage) {
 		try {

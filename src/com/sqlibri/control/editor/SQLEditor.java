@@ -12,13 +12,20 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
+/**
+ * JavaFX control which implements SQL code editor
+ * using WebView with ace.js for syntax highlighting and intelliSence 
+ */
 public class SQLEditor extends StackPane {
 
-	@FXML
-	private WebView editor;
+	// WebView with ace.js
+	@FXML private WebView editor;
 
 	private WebEngine engine;
 
+	/**
+	 * Initialize Layout with FXML and loads ace.js to the webView
+	 */
 	public SQLEditor() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SQLEditor.fxml"));
 		fxmlLoader.setRoot(this);
@@ -34,6 +41,7 @@ public class SQLEditor extends StackPane {
 
 		engine.load(getClass().getResource("editor.html").toExternalForm());
 		
+		//Add hook solution to add Ctrl+V to the Javafx webView
 		editor.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
 	        if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.V){
 	            final Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -46,10 +54,17 @@ public class SQLEditor extends StackPane {
 
 	}
 
+	/**
+	 * @return code from sql editor
+	 */
 	public String getCode() {
 		return (String) engine.executeScript("editor.getValue()");
 	}
 
+	/**
+	 * Puts Code to the sql editor
+	 * @param code to paste to the sql editor
+	 */
 	public void pasteCode(String code) {
 		engine.executeScript("editor.setValue(\"" + code + "\");");
 	}

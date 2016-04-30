@@ -2,6 +2,10 @@ package com.sqlibri.model;
 
 import java.util.List;
 
+/**
+ * Represents table's data returned from query 
+ * with query execution info
+ */
 public class QueryResult {
 
 	private String executionInfo;

@@ -6,68 +6,81 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
-
-<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <panes>
-    <TitledPane animated="false" text="Getting Started">
-         <content>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <TextFlow prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibri is awesome" textAlignment="CENTER" wrappingWidth="242.6640625">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </TextFlow>
-               </children>
-            </StackPane>
-         </content>
-    </TitledPane>
-    <TitledPane animated="false" text="Manual">
-         <content>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <Polygon fill="DODGERBLUE" stroke="BLACK" strokeType="INSIDE">
-                    <points>
-                      <Double fx:value="-50.0" />
-                      <Double fx:value="40.0" />
-                      <Double fx:value="50.0" />
-                      <Double fx:value="40.0" />
-                      <Double fx:value="0.0" />
-                      <Double fx:value="-60.0" />
-                    </points>
-                  </Polygon>
-               </children>
-            </StackPane>
-         </content>
-    </TitledPane>
-    <TitledPane animated="false" text="Shortcuts">
-         <content>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <Circle fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-               </children>
-            </StackPane>
-         </content>
-    </TitledPane>
-      <TitledPane animated="false" text="Errors">
-         <content>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-               </children>
-            </StackPane>
-         </content>
-      </TitledPane>
-  </panes>
+<Accordion maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+	prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<panes>
+		<TitledPane animated="false" text="Getting Started">
+			<content>
+				<StackPane prefHeight="150.0" prefWidth="200.0">
+					<children>
+						<TextFlow prefHeight="200.0" prefWidth="200.0">
+							<children>
+								<Text strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibri is awesome"
+									textAlignment="JUSTIFY" wrappingWidth="520.6640625">
+									<font>
+										<Font size="20.0" />
+									</font>
+								</Text>
+							</children>
+							<padding>
+								<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+							</padding>
+						</TextFlow>
+					</children>
+				</StackPane>
+			</content>
+		</TitledPane>
+		<TitledPane animated="false" text="Shortcuts">
+			<content>
+				<StackPane prefHeight="150.0" prefWidth="200.0">
+					<children>
+						<ListView prefHeight="200.0" prefWidth="200.0">
+							<items>
+								<FXCollections fx:factory="observableArrayList">
+									<String fx:value="[Ctrl+S] - Save Query" />
+									<String fx:value="[Ctrl+Shift+O] - Open Query" />
+									<String fx:value="[Ctrl+E] - Export As CSV" />
+									<String fx:value="[Ctrl+X] - Exit" />
+									<String fx:value="[Ctrl+N] - Create Database" />
+									<String fx:value="[Ctrl+O] - Open Database" />
+									<String fx:value="[Ctrl+Shift+C] - Copy Database" />
+									<String fx:value="[Ctrl+Shift+H] - Open User Guide" />
+								</FXCollections>
+							</items>
+						</ListView>
+					</children>
+				</StackPane>
+			</content>
+		</TitledPane>
+		<TitledPane animated="false" text="Snippets">
+			<content>
+				<StackPane prefHeight="150.0" prefWidth="200.0">
+					<children>
+						<Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+						<ListView prefHeight="200.0" prefWidth="200.0">
+							<items>
+								<FXCollections fx:factory="observableArrayList">
+									<String fx:value="[tbl] - create table" />
+									<String fx:value="[col] - create column" />
+									<String fx:value="[ccol] - create column with varchar" />
+									<String fx:value="[ncol] - create column with number" />
+									<String fx:value="[dcol] - create column with date" />
+									<String fx:value="[ind] - create index on column" />
+									<String fx:value="[uind] - create unique index on column" />
+									<String fx:value="[s*] - select all from table" />
+									<String fx:value="[addcol] - add column to the table" />
+									<String fx:value="[seq] - create sequence" />
+									<String fx:value="[tblcom] - create commnet on table" />
+									<String fx:value="[colcom] - create commnet on column" />
+								</FXCollections>
+							</items>
+						</ListView>
+					</children>
+				</StackPane>
+			</content>
+		</TitledPane>
+	</panes>
 </Accordion>
