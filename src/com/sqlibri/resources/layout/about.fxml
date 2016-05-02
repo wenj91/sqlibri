@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="360.0" style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, rgb(220.0, 220.0, 220.0) 0.0, rgb(255.0, 255.0, 255.0) 100.0);;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<Text layoutX="157.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibri">
 			<font>
@@ -15,19 +15,22 @@
 			</font>
 		</Text>
 		<ListView layoutX="17.0" layoutY="304.0" prefHeight="121.0" prefWidth="326.0" />
-		<TextFlow layoutX="17.0" layoutY="226.0" prefHeight="64.0" prefWidth="326.0">
+		<TextFlow layoutX="17.0" layoutY="226.0" prefHeight="64.0" prefWidth="326.0" textAlignment="JUSTIFY">
 			<children>
-				<Text strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibry is a cross-platform SQLite GUI client. Which allows to manipulate with data easily and effectively." textAlignment="CENTER" wrappingWidth="348.90576171875" />
+				<Text strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibry is a cross-platform SQLite GUI client. Which allows to manipulate with data easily and effectively." textAlignment="CENTER" wrappingWidth="348.90576171875">
+               <font>
+                  <Font size="14.0" />
+               </font></Text>
 			</children>
 			<padding>
 				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 			</padding>
 		</TextFlow>
-		<Hyperlink layoutX="80.0" layoutY="426.0" text="https://github.com/Saka7/sqlibri" />
+		<Hyperlink layoutX="71.0" layoutY="427.0" text="https://github.com/Saka7/sqlibri" />
 		<ImageView fitHeight="175.0" fitWidth="219.0" layoutX="102.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/sqlibri.png" />
+            <Image url="@../image/logo-xdpi.png" />
          </image></ImageView>
-      <Text layoutX="74.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyrights 2016 All rights reserved" />
+      <Text layoutX="65.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyrights 2016 All rights reserved" />
 	</children>
 </AnchorPane>
