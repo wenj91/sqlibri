@@ -106,6 +106,9 @@ to Export data from table view to CSV file you need to click on  **FILE** menu -
 | tblcom | Create comment on table |
 | colcom | Create comment on column |
 
+## License
+SQLibri is released under the [MIT License](https://opensource.org/licenses/MIT).
+
 
 
 
