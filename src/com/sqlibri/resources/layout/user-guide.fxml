@@ -75,7 +75,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="First of all we need to figure out how to create a database. And it's simple as pie. Just [Click on DATABASE menu -&gt; then on CREATE menu item -&gt;] or press CTRL/COMMAND+N, enter database path and name and click OK."
+													text="First of all we need to figure out how to create a database. And it's simple as pie. Just click on DATABASE menu -&gt; CREATE menu item / or press CTRL/COMMAND+N, enter database path and name and click OK."
 													wrappingWidth="536.0001831054688">
 													<font>
 														<Font size="14.0" />
@@ -111,7 +111,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="To open database [click on DATABASE menu -&gt; OPEN menu item -&gt;] or press CTRL/COMMAND+O enter database path and name and click ok.">
+													text="To open database click on DATABASE menu -&gt; OPEN menu item -&gt; / or press CTRL/COMMAND+O enter database path and name and click ok.">
 													<font>
 														<Font size="14.0" />
 													</font>
@@ -143,7 +143,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="To drop database click on DATABASE menu -&gt; DROP menu item -&gt;, enter and press ok. It will drop currently opened database.">
+													text="To drop database click on DATABASE menu -&gt; DROP menu item -&gt; and press ok. It will drop currently opened database.">
 													<font>
 														<Font size="14.0" />
 													</font>
@@ -175,7 +175,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="To copy database [click on DATABASE menu -&gt; COPY menu item -&gt;] or press CTRL/COMMAND+SHIFT+C, enter file path and name and press ok. It will copy currently opened database to new one(which is located by entered filepath).">
+													text="To copy database click on DATABASE menu -&gt; COPY menu item / or press CTRL/COMMAND+SHIFT+C, enter file path and name and press ok. It will copy currently opened database to new one(which is located by entered filepath).">
 													<font>
 														<Font size="14.0" />
 													</font>
@@ -219,7 +219,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="You can write SQL queries in the SQL Editor, which provides some advanced code editor features like syntax highlighting, intellisence and snippets(see Snippets section). To run the query Click on Execute button or press F9. Query execution info will be displayed in the staus bar. If query returns any data it will be displayed in the table view.">
+													text="You can write SQL queries in the SQL Editor, which provides some advanced code editor features like syntax highlighting, intellisence and snippets(see Snippets section). To run the query Click on Execute button or press F9. Query execution info will be displayed in the status bar. If query returns any data it will be displayed in the table view.">
 													<font>
 														<Font size="14.0" />
 													</font>
@@ -263,7 +263,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="To save written before query you need to [Click on FILE menu -&gt; Click on SAVE QUERY menu item] or press CTRL/COMMAND+S and enter file path and name.">
+													text="To save written before query you need to click on FILE menu -&gt; SAVE QUERY menu item / or press CTRL/COMMAND+S and enter file path and name.">
 													<font>
 														<Font size="14.0" />
 													</font>
@@ -295,7 +295,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="To open saved before query you need to [Click on FILE menu -&gt; Click on LOAD QUERY menu item] or press CTRL/COMMAND+SHIFT+O and enter file path and name.">
+													text="To open saved before query you need to click on FILE menu -&gt; LOAD QUERY menu item / or press CTRL/COMMAND+SHIFT+O and enter file path and name.">
 													<font>
 														<Font size="14.0" />
 													</font>
@@ -314,8 +314,6 @@
 												<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 											</VBox.margin>
 										</ImageView>
-
-
 
 										<Label text="Exporting to CSV">
 											<font>
@@ -340,7 +338,7 @@
 											textAlignment="JUSTIFY">
 											<children>
 												<Text strokeType="OUTSIDE" strokeWidth="0.0"
-													text="To export data from table view to CSV file you need to [Click on FILE menu -&gt; click on EXPORT AS CSV menu item] or press CTRL/COMMAND+E and enter file name and press OK.">
+													text="To export data from table view to CSV file you need to click on FILE menu -&gt; EXPORT AS CSV menu item / or press CTRL/COMMAND+E and enter file name and press OK.">
 													<font>
 														<Font size="14.0" />
 													</font>
@@ -359,7 +357,6 @@
 												<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 											</VBox.margin>
 										</ImageView>
-
 
 									</children>
 								</VBox>
@@ -402,16 +399,16 @@
 									<FXCollections fx:factory="observableArrayList">
 										<String fx:value="[tbl] - create table" />
 										<String fx:value="[col] - create column" />
-										<String fx:value="[ccol] - create column with varchar" />
-										<String fx:value="[ncol] - create column with number" />
-										<String fx:value="[dcol] - create column with date" />
+										<String fx:value="[ccol] - create column (varchar type)" />
+										<String fx:value="[ncol] - create column (number type)" />
+										<String fx:value="[dcol] - create column (date type)" />
 										<String fx:value="[ind] - create index on column" />
 										<String fx:value="[uind] - create unique index on column" />
 										<String fx:value="[s*] - select all from table" />
 										<String fx:value="[addcol] - add column to the table" />
 										<String fx:value="[seq] - create sequence" />
-										<String fx:value="[tblcom] - create commnet on table" />
-										<String fx:value="[colcom] - create commnet on column" />
+										<String fx:value="[tblcom] - create comment on table" />
+										<String fx:value="[colcom] - create comment on column" />
 									</FXCollections>
 								</items>
 							</ListView>
