@@ -1,34 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     <title>Sqlibri by Saka7</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Sqlibri</h1>
-        <h2>Lightweight sqlite3 GUI client</h2>
-        <a href="https://github.com/Saka7/sqlibri" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/Saka7/sqlibri">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/Saka7/sqlibri/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/Saka7/sqlibri/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <p><img src="logo-xdpi.png" alt="SQLite Logo"></p>
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Sqlibri</h1>
+          <p>Lightweight sqlite3 GUI client</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/Saka7">Saka7</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/logo-xdpi.png" alt="SQLibry Logo" width="50%" align="middle"></p>
 
 <div class="highlight highlight-source-shell"><pre>███████╗ ██████╗ ██╗     ██╗██████╗ ██████╗ ██╗
 ██╔════╝██╔═══██╗██║     ██║██╔══██╗██╔══██╗██║
@@ -44,36 +54,6 @@
 <p>SQLibry is a cross-platform SQLite GUI client. Which allows to manipulate with data easily and effectively.</p>
 
 <h2>
-<a id="project-structure" class="anchor" href="#project-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project structure</h2>
-
-<div class="highlight highlight-source-shell"><pre>src/
-└── com
-    └── sqlibri
-        ├── App.java - [Class which launch application]
-        ├── control - [Custom Controls]
-        │   └── editor - [SQL Editor]
-        │   └── ... - [Other controls]       
-        ├── presenter - [Presenter classes. Application behavior]
-        │   └── AppPresenter.java - [Presenter <span class="pl-k">for</span> main View]
-        │   └── ... - [Other presenters]
-        ├── model - [Model classes. Application business logic]
-        │   ├── Database.java - [Class <span class="pl-k">for</span> working with database]
-        │   └── QueryResult.java - [Class <span class="pl-k">for</span> storing query results]
-        │   └── ... - [Other models]
-        ├── resources - [Resources folder]
-        │   ├── image - [Images folder]
-        │   │   ├── database.png
-        │   │   ├── ... - [Other images]
-        │   ├── layout - [View folder. Application GUI]
-        │   │   └── main-layout.fxml - [Main view]
-        │   │   ├── ... - [Other views]
-        │   └── style - [Styles folder. Application appearance]
-        │       └── main-style.css - [Style <span class="pl-k">for</span> Main view]
-        │       ├── ... - [Other styles]
-        └── util - [Utility classes]
-           └── ...</pre></div>
-
-<h2>
 <a id="build-and-run" class="anchor" href="#build-and-run" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build and Run</h2>
 
 <p>To build this application you need gradle build tool
@@ -87,28 +67,199 @@ To run this application you need Java SE 1.8.0_40+
 
 <p>To build the project. And</p>
 
-<div class="highlight highlight-source-shell"><pre> java -jar build/libs/sqlibri-0.0.2.jar</pre></div>
+<div class="highlight highlight-source-shell"><pre> java -jar build/libs/sqlibri-0.0.3.jar</pre></div>
 
 <p>To run it.</p>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/Saka7/sqlibri/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/Saka7/sqlibri/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h2>
 
-          <p class="repo-owner"><a href="https://github.com/Saka7/sqlibri"></a> is maintained by <a href="https://github.com/Saka7">Saka7</a>.</p>
+<p>It this section we collect all information which is essential to figure out how to use the application. You can find this tutorial inside the application by pressing <code>CTRL/COMMAND+SHIFT+H</code> or find it in HELP&gt;USER GUIDE menu.</p>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+<h3>
+<a id="working-with-database" class="anchor" href="#working-with-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working with database</h3>
+
+<h4>
+<a id="creating-database" class="anchor" href="#creating-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating database</h4>
+
+<p>First of all we need to figure out how to create a database. And it's simple as pie. Just click on <strong>DATABASE</strong> menu -&gt; then on <strong>CREATE</strong> menu item / or press <code>CTRL/COMMAND+N</code>, enter database path and name and click OK.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/Database-Create.png" alt="Creating database"></p>
+
+<h4>
+<a id="opening-database" class="anchor" href="#opening-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Opening database</h4>
+
+<p>To open database click on <strong>DATABASE</strong> menu -&gt; <strong>OPEN</strong> menu item / or press <code>CTRL/COMMAND+O</code>, enter database path and name and click ok.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/Database-Open.png" alt="Opening database"></p>
+
+<h4>
+<a id="droping-database" class="anchor" href="#droping-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Droping database</h4>
+
+<p>TO drop database click on <strong>DATABASE</strong> menu -&gt; <strong>DROP</strong> menu item -&gt; and press ok. It will drop currently opened database.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/Database-Drop.png" alt="Droping database"></p>
+
+<h4>
+<a id="copying-database" class="anchor" href="#copying-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Copying database</h4>
+
+<p>To copy database click on <strong>DATABASE</strong> menu -&gt; <strong>COPY</strong> menu item / or press    <code>CTRL/COMMAND+SHIFT+C</code>, enter file path and name and press ok. It will copy currently opened database to new one(which is located by entered filepath).</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/Database-Copy.png" alt="Copying database"></p>
+
+<h3>
+<a id="working-with-sql-editor" class="anchor" href="#working-with-sql-editor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working with SQL editor</h3>
+
+<h4>
+<a id="writing-and-executing-sql-queries" class="anchor" href="#writing-and-executing-sql-queries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Writing and executing SQL queries</h4>
+
+<p>You can write SQL queries in the SQL Editor, which provides some advanced code editor features like syntax highlighting, intellisence and snippets. To run the query click on <strong>EXECUTE</strong> button or press <strong>F9</strong>. Query execution info will be displayed in the status bar. If query returns any data it will be displayed in the table view.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/SQLEditor.png" alt="Working with SQL editor"></p>
+
+<h3>
+<a id="working-with-query-files" class="anchor" href="#working-with-query-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working with query files</h3>
+
+<h4>
+<a id="saving-queries" class="anchor" href="#saving-queries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saving Queries</h4>
+
+<p>To save written before query you need to click on <strong>FILE</strong> menu -&gt; <strong>SAVE QUERY</strong> menu item / or pres <code>CTRL/COMMAND+S</code> and enter file path and name.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/File-SaveQuery.png" alt="Saving queries"></p>
+
+<h4>
+<a id="opening-queries" class="anchor" href="#opening-queries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Opening Queries</h4>
+
+<p>To open saved before query you need to click on <strong>FILE</strong> -&gt; <strong>LOAD QUERY</strong> menu item / or press <code>CTRL/COMMAND+SHIFT+O</code> and enter file path and name.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/File-LoadQuery.png" alt="Opening Queries"></p>
+
+<h3>
+<a id="exporting-as-csv" class="anchor" href="#exporting-as-csv" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exporting as CSV</h3>
+
+<h4>
+<a id="exporting-data-to-csv-file" class="anchor" href="#exporting-data-to-csv-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exporting data to CSV file</h4>
+
+<p>to Export data from table view to CSV file you need to click on  <strong>FILE</strong> menu -&gt; <strong>EXPORT AS CSV</strong> menu item / or press <code>CTRL/COMMAND+E</code>, enter file name and press ok.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/File-ExportAsCSV.png" alt="Exporting as CSV"></p>
+
+<h2>
+<a id="shortcuts" class="anchor" href="#shortcuts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Shortcuts</h2>
+
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">CTRL/COMMAND+S</td>
+<td align="left">Save Query</td>
+</tr>
+<tr>
+<td align="left">CTRL/COMMAND+Shift+O</td>
+<td align="left">Open Query</td>
+</tr>
+<tr>
+<td align="left">CTRL/COMMAND+E</td>
+<td align="left">Export As CSV</td>
+</tr>
+<tr>
+<td align="left">CTRL/COMMAND+X</td>
+<td align="left">Exit</td>
+</tr>
+<tr>
+<td align="left">CTRL/COMMAND+N</td>
+<td align="left">Create Database</td>
+</tr>
+<tr>
+<td align="left">CTRL/COMMAND+O</td>
+<td align="left">Open Database</td>
+</tr>
+<tr>
+<td align="left">CTRL/COMMAND+Shift+C</td>
+<td align="left">Copy Database</td>
+</tr>
+<tr>
+<td align="left">CTRL/COMMAND+Shift+H</td>
+<td align="left">Open User Guide</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="snippets" class="anchor" href="#snippets" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Snippets</h2>
+
+<table>
+<thead>
+<tr>
+<th align="left">keyword</th>
+<th align="left">expanded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">tbl</td>
+<td align="left">Create table</td>
+</tr>
+<tr>
+<td align="left">col</td>
+<td align="left">Create column</td>
+</tr>
+<tr>
+<td align="left">ccol</td>
+<td align="left">Create column (varchar type)</td>
+</tr>
+<tr>
+<td align="left">ncol</td>
+<td align="left">Create column (number type)</td>
+</tr>
+<tr>
+<td align="left">dcol</td>
+<td align="left">Create column (date type)</td>
+</tr>
+<tr>
+<td align="left">ind</td>
+<td align="left">Create index on column</td>
+</tr>
+<tr>
+<td align="left">uind</td>
+<td align="left">Create unique index on column</td>
+</tr>
+<tr>
+<td align="left">s*</td>
+<td align="left">Select all from table</td>
+</tr>
+<tr>
+<td align="left">addcol</td>
+<td align="left">Add column to the table</td>
+</tr>
+<tr>
+<td align="left">seq</td>
+<td align="left">Create sequence</td>
+</tr>
+<tr>
+<td align="left">tblcom</td>
+<td align="left">Create comment on table</td>
+</tr>
+<tr>
+<td align="left">colcom</td>
+<td align="left">Create comment on column</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>SQLibri is released under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+      </section>
+
     </div>
-
-  
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
