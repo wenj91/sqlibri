@@ -408,7 +408,10 @@
 										<String fx:value="[addcol] - add column to the table" />
 										<String fx:value="[seq] - create sequence" />
 										<String fx:value="[tblcom] - create comment on table" />
-										<String fx:value="[colcom] - create comment on column" />
+										<String fx:value="[ins] - insert row(s) to table" />
+										<String fx:value="[upt] - update row(s)" />
+										<String fx:value="[dt] - drop table" />
+										<String fx:value="[dl] - delete row(s) from table" />
 									</FXCollections>
 								</items>
 							</ListView>

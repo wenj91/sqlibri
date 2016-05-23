@@ -105,6 +105,10 @@ to Export data from table view to CSV file you need to click on  **FILE** menu -
 | seq | Create sequence |
 | tblcom | Create comment on table |
 | colcom | Create comment on column |
+| ins | Insert row(s) to table |
+| upt | Update row(s) |
+| dt | Drop table |
+| dl | Delete row(s) from table |
 
 ## License
 SQLibri is released under the [MIT License](https://opensource.org/licenses/MIT).
