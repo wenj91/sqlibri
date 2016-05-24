@@ -46,9 +46,13 @@ public class SQLEditor extends StackPane {
 	        if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.V){
 	            final Clipboard clipboard = Clipboard.getSystemClipboard();
 	            String content = (String) clipboard.getContent(DataFormat.PLAIN_TEXT);
-	            content = content.replaceAll("(\n|\r)", " ");
+	            
+	            content = content.replace("'", "\\'")
+	            		.replace(System.getProperty("line.separator"), "\\n")
+	            		.replace("\n", "\\n")
+	            		.replace("\r", "\\n");
+	            
 	            engine.executeScript(" pasteContent(\""+content+"\") ");
-
 	        }
 	    });
 
@@ -66,6 +70,12 @@ public class SQLEditor extends StackPane {
 	 * @param code to paste to the sql editor
 	 */
 	public void pasteCode(String code) {
+		System.out.println(code);
+        code = code.replace("'", "\\'")
+        		.replace(System.getProperty("line.separator"), "\\n")
+        		.replace("\n", "\\n")
+        		.replace("\r", "\\n");
+        System.out.println(code);
 		engine.executeScript("editor.setValue(\"" + code + "\");");
 	}
 

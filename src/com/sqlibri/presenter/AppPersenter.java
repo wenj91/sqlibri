@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.sqlibri.App;
@@ -282,7 +279,7 @@ public class AppPersenter {
 		String query = "";
 
 		try {
-			query = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining());
+			query = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
 		} catch (IOException e) {
 			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
