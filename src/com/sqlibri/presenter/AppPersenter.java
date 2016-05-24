@@ -2,13 +2,14 @@ package com.sqlibri.presenter;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.sqlibri.App;
@@ -24,7 +25,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
@@ -34,6 +34,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -131,6 +132,18 @@ public class AppPersenter {
 
 		table.setItems(data);
 
+	}
+	
+	private void showQueryExecutionNotification() {
+		final Tooltip tooltip = new Tooltip();
+		final String notification = statusBar.getText();
+		if(notification != null && !notification.isEmpty()) {
+			tooltip.setAutoHide(true);
+			tooltip.setText(notification);
+			double xPosition = window.getX() + 5;
+			double yPosition = window.getY() + window.getHeight() - 35;
+			tooltip.show(window, xPosition, yPosition);
+		}
 	}
 
 	/**
@@ -327,8 +340,10 @@ public class AppPersenter {
 		} catch (SQLException e) {
 			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
 			statusBar.setText(PrettyStatus.error(query));
+			return;
 		} catch (Exception e) {
 			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+			return;
 		}
 
 		if (lastResult != null) {
@@ -338,6 +353,7 @@ public class AppPersenter {
 			}
 			if (lastResult.getExecutionInfo() != null) {
 				statusBar.setText(lastResult.getExecutionInfo());
+				showQueryExecutionNotification();
 			}
 		}
 
