@@ -104,7 +104,7 @@ public class Database {
 			statement = connection.createStatement();
 
 			long start = System.currentTimeMillis();
-			if (isDML(query)) {
+			if (isSelectQuery(query)) {
 				resultSet = statement.executeQuery(query);
 			} else {
 				statement.executeUpdate(query);
@@ -117,19 +117,20 @@ public class Database {
 				return queryResult;
 
 			queryResult.setColumnNames(new ArrayList<String>());
-			for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+			int columns = resultSet.getMetaData().getColumnCount(); 
+			for (int i = 1; i <= columns; i++) {
 				queryResult.getColumnNames().add(resultSet.getMetaData().getColumnName(i));
 			}
 
 			queryResult.setTableData(new ArrayList<>());
 			for (int row = 0; resultSet.next(); row++) {
 				queryResult.getTableData().add(new ArrayList<String>());
-				for (int column = 0; column < resultSet.getMetaData().getColumnCount(); column++) {
+				for (int column = 0;  column < columns; column++) {
 					queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
 				}
 			}
 		} finally {
-			if (isDML(query)) {
+			if (isSelectQuery(query)) {
 				resultSet.close();
 			}
 			statement.close();
@@ -140,7 +141,7 @@ public class Database {
 	}
 
 	// Checks is query is 'SELECT' query
-	private boolean isDML(String query) {
+	private boolean isSelectQuery(String query) {
 		return query.toUpperCase().matches("^\\s*SELECT.*$");
 	}
 
