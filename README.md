@@ -1,3 +1,22 @@
+<div style="display: inline-block;
+background-color: #444;
+border-top-left-radius: 3px;
+border-bottom-left-radius: 3px;
+color: white;
+padding: 3px;"> 
+version
+</div>
+<div style="display: inline-block;
+background-color: teal;
+color: white;
+border-top-right-radius: 3px;
+border-bottom-right-radius: 3px;
+padding: 3px;">
+0.4.2
+</div>
+
+<br />
+
 <img src= "https://raw.githubusercontent.com/Saka7/sqlibri/master/logo-xdpi.png" alt="SQLibry Logo" width="50%" style="position: relative; left: 50%; margin-left: -25%; margin-top: 10px"/>
 
 ``` Bash
@@ -24,7 +43,7 @@ gradle build
 ```
 To build the project. And
 ``` Bash
- java -jar build/libs/sqlibri-0.0.3.jar
+ java -jar build/libs/sqlibri-[version].jar
 ```
 To run it.
 
@@ -58,6 +77,12 @@ To copy database click on **DATABASE** menu -> **COPY** menu item / or press 	``
 You can write SQL queries in the SQL Editor, which provides some advanced code editor features like syntax highlighting, intellisence and snippets. To run the query click on **EXECUTE** button or press **F9**. Query execution info will be displayed in the status bar. If query returns any data it will be displayed in the table view.
 
 ![Working with SQL editor](https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/SQLEditor.png)
+
+#### Navigating through previously executed queries
+When query has been executed, it saves to history. You can search and select previously executed queries using history combobox.
+
+![Queries History](https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/History.png)
+
 
 ### Working with query files
 #### Saving Queries
