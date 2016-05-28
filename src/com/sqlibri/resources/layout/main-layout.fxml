@@ -207,6 +207,9 @@
 								<Tooltip text="Execute Query" />
 							</tooltip>
 						</Button>
+						<Pane HBox.hgrow="ALWAYS" />
+						<ComboBox fx:id="commands" layoutX="15.0" layoutY="33.0"
+							prefWidth="320" prefHeight="35"></ComboBox>
 					</items>
 				</ToolBar>
 			</children>

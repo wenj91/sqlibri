@@ -28,6 +28,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,22 +51,20 @@ public class AppPersenter {
 
 	private final String DB_ICON = "com/sqlibri/resources/image/database.png";
 	private final String TABLE_ICON = "com/sqlibri/resources/image/table.png";
+	private final String USER_GUIDE = "resources/layout/user-guide.fxml";
+	private final String ABOUT = "resources/layout/about.fxml";
 
 	private Stage window;
 
 	private Database db;
-
 	private QueryResult lastResult;
 
 	@FXML private TreeView<String> dbStructure;
-
 	@FXML private SQLEditor editor;
-
 	@FXML private TableView<ObservableList<String>> table;
-
 	@FXML private Label statusBar;
-
 	@FXML private Button execute;
+	@FXML private ComboBox<String> commands;
 
 	// Shows up error dialog with the following message
 	private void showErrorDialog(String title, String header, String content) {
@@ -131,6 +130,7 @@ public class AppPersenter {
 
 	}
 	
+	// shows notification of query execution
 	private void showQueryExecutionNotification() {
 		final Tooltip tooltip = new Tooltip();
 		final String notification = statusBar.getText();
@@ -142,6 +142,14 @@ public class AppPersenter {
 			tooltip.show(window, xPosition, yPosition);
 		}
 	}
+	
+	
+	// adds query to commands combobox
+	private void addToCommandsHistory(String command) {
+		final ObservableList<String> listOfCommands = commands.getItems();
+		if(!listOfCommands.contains(command.replaceAll("\\s*", ""))) 
+			listOfCommands.add(0, command);
+	}
 
 	/**
 	 * Setter for primary stage field,
@@ -149,11 +157,16 @@ public class AppPersenter {
 	 * Also, adds all shortcuts events to the given stage
 	 * @param primaryStage 
 	 */
-	public void setStage(Stage primaryStage) {
+	public void init(Stage primaryStage) {
 		window = primaryStage;
+		
 		window.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 			if (e.getCode() == KeyCode.F9)
 				execute();
+		});
+		
+		commands.valueProperty().addListener(e -> {
+			editor.pasteCode(commands.getSelectionModel().getSelectedItem());
 		});
 	}
 
@@ -268,7 +281,7 @@ public class AppPersenter {
 	 * Load Query event handler [File -> Load Query or Ctrl+Shift+O]
 	 * Loads query from given file to SQL editor
 	 */
-	@FXML	public void loadQuery() {
+	@FXML public void loadQuery() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Query File");
 		File file = fileChooser.showOpenDialog(window);
@@ -303,7 +316,8 @@ public class AppPersenter {
 
 		try {
 			Files.write(file.toPath(),
-					CSVParser.parseToCSV(lastResult.getColumnNames(), lastResult.getTableData()).getBytes());
+					CSVParser.parseToCSV(lastResult.getColumnNames(),
+							lastResult.getTableData()).getBytes());
 		} catch (IOException e) {
 			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
@@ -327,12 +341,13 @@ public class AppPersenter {
 	 * if it's error message then shows error dialog
 	 * else updates just executes query and updates status bar
 	 */
-	@FXML	public void execute() {
+	@FXML public void execute() {
 		if (db == null || db.getFile() == null)
 			return;
 
 		String query = editor.getCode();
 		try {
+			addToCommandsHistory(query);
 			lastResult = db.executeQuery(query);
 		} catch (SQLException e) {
 			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
@@ -365,7 +380,7 @@ public class AppPersenter {
 		Stage userGuide = new Stage();
 		Accordion accordion = null;
 		try {
-			accordion = FXMLLoader.load(App.class.getResource("resources/layout/user-guide.fxml"));
+			accordion = FXMLLoader.load(App.class.getResource(USER_GUIDE));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -382,7 +397,7 @@ public class AppPersenter {
 		Stage about = new Stage();
 		AnchorPane aboutPane = null;
 		try {
-			aboutPane = FXMLLoader.load(App.class.getResource("resources/layout/about.fxml"));
+			aboutPane = FXMLLoader.load(App.class.getResource(ABOUT));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

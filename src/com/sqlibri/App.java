@@ -29,7 +29,7 @@ public class App extends Application {
 			primaryStage.setScene(scene);
 			
 			AppPersenter controller = (AppPersenter) loader.getController();
-			controller.setStage(primaryStage);
+			controller.init(primaryStage);
 			
 			primaryStage.setTitle("sqlibri");
 			primaryStage.getIcons().add(rootIcon);
