@@ -33,6 +33,7 @@ public class App extends Application {
 			
 			primaryStage.setTitle("sqlibri");
 			primaryStage.getIcons().add(rootIcon);
+			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
