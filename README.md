@@ -1,19 +1,4 @@
-<div style="display: inline-block;
-background-color: #444;
-border-top-left-radius: 3px;
-border-bottom-left-radius: 3px;
-color: white;
-padding: 3px;"> 
-version
-</div>
-<div style="display: inline-block;
-background-color: teal;
-color: white;
-border-top-right-radius: 3px;
-border-bottom-right-radius: 3px;
-padding: 3px;">
-0.4.2
-</div>
+![version](https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.svg)
 
 <br />
 
