@@ -6,21 +6,31 @@
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="360.0" style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, rgb(220.0, 220.0, 220.0) 0.0, rgb(255.0, 255.0, 255.0) 100.0);;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Text layoutX="157.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibri">
+		<Text layoutX="126.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibri v0.4.2">
 			<font>
 				<Font name="System Bold" size="16.0" />
 			</font>
 		</Text>
-		<ListView layoutX="17.0" layoutY="304.0" prefHeight="121.0" prefWidth="326.0" />
+		<ListView layoutX="17.0" layoutY="308.0" prefHeight="121.0" prefWidth="326.0">
+			<items>
+        <FXCollections fx:factory="observableArrayList">
+            <String fx:value="Developer: Ihor Sakaylyuk"/>
+            <String fx:value="Logo Design: Vasyl Chernetskyi"/>
+            <String fx:value="Manager: Andrew Fedyshyn"/>
+        </FXCollections>
+			</items>
+		</ListView>
 		<TextFlow layoutX="17.0" layoutY="226.0" prefHeight="64.0" prefWidth="326.0" textAlignment="JUSTIFY">
 			<children>
 				<Text strokeType="OUTSIDE" strokeWidth="0.0" text="SQLibry is a cross-platform SQLite GUI client. Which allows to manipulate with data easily and effectively." textAlignment="CENTER" wrappingWidth="348.90576171875">
-               <font>
-                  <Font size="14.0" />
-               </font></Text>
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Text>
 			</children>
 			<padding>
 				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -28,9 +38,15 @@
 		</TextFlow>
 		<Hyperlink layoutX="71.0" layoutY="427.0" text="https://github.com/Saka7/sqlibri" />
 		<ImageView fitHeight="175.0" fitWidth="219.0" layoutX="102.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../image/logo-xdpi.png" />
-         </image></ImageView>
-      <Text layoutX="65.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyrights 2016 All rights reserved" />
+			<image>
+				<Image url="@../image/logo-xdpi.png" />
+			</image>
+		</ImageView>
+		<Text layoutX="65.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyrights 2016 All rights reserved" />
+      <Text layoutX="18.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contributors:">
+         <font>
+            <Font name="Ubuntu Bold" size="13.0" />
+         </font>
+      </Text>
 	</children>
 </AnchorPane>
