@@ -28,7 +28,11 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/logo-xdpi.png" alt="SQLibry Logo" width="50%"></p>
+          <p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.svg" alt="version"></p>
+
+<p><br></p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/logo-xdpi.png" alt="SQLibry Logo" width="50%"></p>
 
 <div class="highlight highlight-source-shell"><pre>███████╗ ██████╗ ██╗     ██╗██████╗ ██████╗ ██╗
 ██╔════╝██╔═══██╗██║     ██║██╔══██╗██╔══██╗██║
@@ -57,7 +61,7 @@ To run this application you need Java SE 1.8.0_40+
 
 <p>To build the project. And</p>
 
-<div class="highlight highlight-source-shell"><pre> java -jar build/libs/sqlibri-0.0.3.jar</pre></div>
+<div class="highlight highlight-source-shell"><pre> java -jar build/libs/sqlibri-[version].jar</pre></div>
 
 <p>To run it.</p>
 
@@ -106,6 +110,13 @@ To run this application you need Java SE 1.8.0_40+
 <p>You can write SQL queries in the SQL Editor, which provides some advanced code editor features like syntax highlighting, intellisence and snippets. To run the query click on <strong>EXECUTE</strong> button or press <strong>F9</strong>. Query execution info will be displayed in the status bar. If query returns any data it will be displayed in the table view.</p>
 
 <p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/SQLEditor.png" alt="Working with SQL editor"></p>
+
+<h4>
+<a id="navigating-through-previously-executed-queries" class="anchor" href="#navigating-through-previously-executed-queries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Navigating through previously executed queries</h4>
+
+<p>When query has been executed, it saves to history. You can search and select previously executed queries using history combobox.</p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/History.png" alt="Queries History"></p>
 
 <h3>
 <a id="working-with-query-files" class="anchor" href="#working-with-query-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working with query files</h3>
@@ -238,6 +249,22 @@ To run this application you need Java SE 1.8.0_40+
 <tr>
 <td align="left">colcom</td>
 <td align="left">Create comment on column</td>
+</tr>
+<tr>
+<td align="left">ins</td>
+<td align="left">Insert row(s) to table</td>
+</tr>
+<tr>
+<td align="left">upt</td>
+<td align="left">Update row(s)</td>
+</tr>
+<tr>
+<td align="left">dt</td>
+<td align="left">Drop table</td>
+</tr>
+<tr>
+<td align="left">dl</td>
+<td align="left">Delete row(s) from table</td>
 </tr>
 </tbody>
 </table>
