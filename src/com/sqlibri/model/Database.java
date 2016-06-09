@@ -129,7 +129,12 @@ public class Database {
 					queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
 				}
 			}
-		} finally {
+		} catch(SQLException e) {
+			throw e;
+		} catch(Exception e) {
+			throw e;
+		}
+		finally {
 			if (isSelectQuery(query)) {
 				resultSet.close();
 			}

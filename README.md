@@ -1,8 +1,8 @@
-![version](https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.svg)
+![version](https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.png)
 
 <br />
 
-<img src= "https://raw.githubusercontent.com/Saka7/sqlibri/master/logo-xdpi.png" alt="SQLibry Logo" width="50%" style="position: relative; left: 50%; margin-left: -25%; margin-top: 10px"/>
+<img src= "https://raw.githubusercontent.com/Saka7/sqlibri/master/SQLibri.png" alt="SQLibry Logo" width="50%" style="position: relative; left: 50%; margin-left: -25%; margin-top: 10px"/>
 
 ``` Bash
 ███████╗ ██████╗ ██╗     ██╗██████╗ ██████╗ ██╗
@@ -122,7 +122,3 @@ to Export data from table view to CSV file you need to click on  **FILE** menu -
 
 ## License
 SQLibri is released under the [MIT License](https://opensource.org/licenses/MIT).
-
-
-
-

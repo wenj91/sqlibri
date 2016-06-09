@@ -16,7 +16,7 @@ public class App extends Application {
 
 	// Application Icon
 	private final Image rootIcon = new Image(getClass()
-			.getResource("resources/image/sqlibri.png").toExternalForm());
+			.getResource("resources/image/SQLibri-icon.png").toExternalForm());
 	
 	@Override
 	public void start(Stage primaryStage) {

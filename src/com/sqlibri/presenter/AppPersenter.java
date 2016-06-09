@@ -259,7 +259,7 @@ public class AppPersenter {
 	 * Save Query event handler [File -> Save Query or Ctrl+S]
 	 * Saves query from SQL editor to given file
 	 */
-	@FXML	public void saveQuery() {
+	@FXML public void saveQuery() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Query");
 		File file = fileChooser.showSaveDialog(window);
