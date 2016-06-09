@@ -19,7 +19,7 @@
 			<children>
 				<Label fx:id="statusBar" text="No queries have been executed yet.">
 					<font>
-						<Font name="Droid Sans" size="12.0" />
+						<Font name="Roboto Regular" size="14.0" />
 					</font>
 					<HBox.margin>
 						<Insets left="10.0" />
