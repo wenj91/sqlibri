@@ -67,11 +67,11 @@ public class AppPersenter {
 	@FXML private ComboBox<String> commands;
 
 	// Shows up error dialog with the following message
-	private void showErrorDialog(String title, String header, String content) {
+	private void showErrorDialog(String title, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle(title);
-		alert.setHeaderText(header);
-		alert.setContentText(content);
+		alert.setHeaderText(content);
+		alert.getDialogPane().setMaxSize(320, 640);
 		alert.showAndWait();
 	}
 
@@ -189,9 +189,9 @@ public class AppPersenter {
 		try {
 			db.connect();
 		} catch (SQLException e) {
-			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
+			showErrorDialog("SQL ERROR:", e.getMessage());
 		} catch (Exception e) {
-			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+			showErrorDialog("Unexpected ERROR:", e.getMessage());
 		}
 
 		loadTables(db.getFile());
@@ -248,9 +248,9 @@ public class AppPersenter {
 		try {
 			Files.copy(db.getFile().toPath(), file.toPath());
 		} catch (IOException e) {
-			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+			showErrorDialog("FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
-			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+			showErrorDialog("Unexpected ERROR:", e.getMessage());
 		}
 	}
 
@@ -270,9 +270,9 @@ public class AppPersenter {
 		try {
 			Files.write(file.toPath(), editor.getCode().getBytes());
 		} catch (IOException e) {
-			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+			showErrorDialog("FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
-			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+			showErrorDialog("Unexpected ERROR:", e.getMessage());
 		}
 
 	}
@@ -294,9 +294,9 @@ public class AppPersenter {
 		try {
 			query = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
 		} catch (IOException e) {
-			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+			showErrorDialog("FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
-			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+			showErrorDialog("Unexpected ERROR:", e.getMessage());
 		}
 
 		editor.pasteCode(query);
@@ -319,9 +319,9 @@ public class AppPersenter {
 					CSVParser.parseToCSV(lastResult.getColumnNames(),
 							lastResult.getTableData()).getBytes());
 		} catch (IOException e) {
-			showErrorDialog("ERROR", "FILE IO ERROR:", e.getMessage());
+			showErrorDialog("FILE IO ERROR:", e.getMessage());
 		} catch (Exception e) {
-			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+			showErrorDialog("Unexpected ERROR:", e.getMessage());
 		}
 
 	}
@@ -350,11 +350,11 @@ public class AppPersenter {
 			addToCommandsHistory(query);
 			lastResult = db.executeQuery(query);
 		} catch (SQLException e) {
-			showErrorDialog("ERROR", "SQL ERROR:", e.getMessage());
+			showErrorDialog("SQL ERROR", e.getMessage());
 			statusBar.setText(PrettyStatus.error(query));
 			return;
 		} catch (Exception e) {
-			showErrorDialog("ERROR", "Unexpected ERROR:", e.getMessage());
+			showErrorDialog("Unexpected ERROR:", e.getMessage());
 			return;
 		}
 

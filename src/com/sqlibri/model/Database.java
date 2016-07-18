@@ -135,9 +135,9 @@ public class Database {
 			throw e;
 		}
 		finally {
-			if (isSelectQuery(query)) {
+			if (isSelectQuery(query) && resultSet != null) 
 				resultSet.close();
-			}
+			
 			statement.close();
 			connection.close();
 		}
