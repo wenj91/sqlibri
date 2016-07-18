@@ -1,25 +1,14 @@
 ![version](https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.png)
 
-<br />
+![sqlibri-logo](https://raw.githubusercontent.com/Saka7/sqlibri/master/SQLibri.png)
 
-<img src= "https://raw.githubusercontent.com/Saka7/sqlibri/master/SQLibri.png" alt="SQLibry Logo" width="50%" style="position: relative; left: 50%; margin-left: -25%; margin-top: 10px"/>
-
-``` Bash
-███████╗ ██████╗ ██╗     ██╗██████╗ ██████╗ ██╗
-██╔════╝██╔═══██╗██║     ██║██╔══██╗██╔══██╗██║
-███████╗██║   ██║██║     ██║██████╔╝██████╔╝██║
-╚════██║██║▄▄ ██║██║     ██║██╔══██╗██╔══██╗██║
-███████║╚██████╔╝███████╗██║██████╔╝██║  ██║██║
-╚══════╝ ╚══▀▀═╝ ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝
-
-```
 # SQLibri - the lightweight sqlite GUI client
 SQLibry is a cross-platform SQLite GUI client. Which allows to manipulate with data easily and effectively.
 
 ## Build and Run
-To build this application you need gradle build tool
+To build this application you need gradle build tool.
 [Download Gradle](http://gradle.org/gradle-download/)
-To run this application you need Java SE 1.8.0_40+
+To it you need Java SE 1.8.0_40+
 [Download Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 Navigate to project parent folder and run: 
@@ -34,7 +23,7 @@ To run it.
 
 
 ## Getting started
-It this section we collect all information which is essential to figure out how to use the application. You can find this tutorial inside the application by pressing ``CTRL/COMMAND+SHIFT+H`` or find it in HELP>USER GUIDE menu.
+It this section we collect all information which is essential to figure out how to use the application. You can find this tutorial inside the application by pressing ``CTRL/COMMAND+SHIFT+H`` or find it in HELP -> USER GUIDE menu.
 
 ### Working with database
 #### Creating database
