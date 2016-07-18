@@ -1,46 +1,39 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <meta name="description" content="Sqlibri : Cross-platform lightweight sqlite3 GUI client">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Sqlibri by Saka7</title>
+    <title>Sqlibri</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>Sqlibri</h1>
-        <h2>Lightweight sqlite3 GUI client</h2>
-        <a href="https://github.com/Saka7/sqlibri" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.png" alt="version"></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Saka7/sqlibri">View on GitHub</a>
 
-<p><br></p>
+          <h1 id="project_title">Sqlibri</h1>
+          <h2 id="project_tagline">Cross-platform lightweight sqlite3 GUI client</h2>
 
-<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/SQLibri.png" alt="SQLibry Logo" width="50%"></p>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Saka7/sqlibri/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Saka7/sqlibri/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-<div class="highlight highlight-source-shell"><pre>███████╗ ██████╗ ██╗     ██╗██████╗ ██████╗ ██╗
-██╔════╝██╔═══██╗██║     ██║██╔══██╗██╔══██╗██║
-███████╗██║   ██║██║     ██║██████╔╝██████╔╝██║
-╚════██║██║▄▄ ██║██║     ██║██╔══██╗██╔══██╗██║
-███████║╚██████╔╝███████╗██║██████╔╝██║  ██║██║
-╚══════╝ ╚══▀▀═╝ ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝
-</pre></div>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.png" alt="version"></p>
+
+<p><img src="https://raw.githubusercontent.com/Saka7/sqlibri/master/SQLibri.png" alt="sqlibri-logo"></p>
 
 <h1>
 <a id="sqlibri---the-lightweight-sqlite-gui-client" class="anchor" href="#sqlibri---the-lightweight-sqlite-gui-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SQLibri - the lightweight sqlite GUI client</h1>
@@ -50,9 +43,9 @@
 <h2>
 <a id="build-and-run" class="anchor" href="#build-and-run" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build and Run</h2>
 
-<p>To build this application you need gradle build tool
+<p>To build this application you need gradle build tool.
 <a href="http://gradle.org/gradle-download/">Download Gradle</a>
-To run this application you need Java SE 1.8.0_40+
+To it you need Java SE 1.8.0_40+
 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Download Java</a></p>
 
 <p>Navigate to project parent folder and run: </p>
@@ -68,7 +61,7 @@ To run this application you need Java SE 1.8.0_40+
 <h2>
 <a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h2>
 
-<p>It this section we collect all information which is essential to figure out how to use the application. You can find this tutorial inside the application by pressing <code>CTRL/COMMAND+SHIFT+H</code> or find it in HELP&gt;USER GUIDE menu.</p>
+<p>It this section we collect all information which is essential to figure out how to use the application. You can find this tutorial inside the application by pressing <code>CTRL/COMMAND+SHIFT+H</code> or find it in HELP -&gt; USER GUIDE menu.</p>
 
 <h3>
 <a id="working-with-database" class="anchor" href="#working-with-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working with database</h3>
@@ -273,25 +266,18 @@ To run this application you need Java SE 1.8.0_40+
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>SQLibri is released under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/Saka7/sqlibri/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/Saka7/sqlibri/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/Saka7/sqlibri"></a> is maintained by <a href="https://github.com/Saka7">Saka7</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-  
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Sqlibri maintained by <a href="https://github.com/Saka7">Saka7</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
