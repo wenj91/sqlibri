@@ -98,4 +98,4 @@ to Export data from table view to CSV file you need to click on  **FILE** menu -
 | dl | Delete row(s) from table |
 
 # License
-SQLibri is released under the [MIT License](https://opensource.org/licenses/MIT).
+SQLibri is released under the [BSD-3 License](https://opensource.org/licenses/BSD-3-Clause).
