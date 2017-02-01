@@ -6,11 +6,11 @@ version = "0.4.3"
 def mainClass = "com.sqlibri.App"
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	runtime 'org.xerial:sqlite-jdbc:3.8.11.2'
+    runtime 'org.xerial:sqlite-jdbc:3.8.11.2'
 }
 
 sourceSets {
@@ -27,10 +27,10 @@ sourceSets {
 jar {
   manifest {
     attributes(
-    	'Implementation-Version': version,
-    	"Main-Class" : mainClass ,
-    	"Class-Path": configurations.compile.collect { it.getName() }.join(' '))
-  	}
-	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-	from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+        'Implementation-Version': version,
+        "Main-Class" : mainClass ,
+        "Class-Path": configurations.compile.collect { it.getName() }.join(' '))
+  }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
 }

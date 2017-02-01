@@ -18,61 +18,61 @@ import javafx.scene.web.WebView;
  */
 public class SQLEditor extends StackPane {
 
-	// WebView with ace.js
-	@FXML private WebView editor;
+  // WebView with ace.js
+  @FXML private WebView editor;
 
-	private WebEngine engine;
+  private WebEngine engine;
 
-	/**
-	 * Initialize Layout with FXML and loads ace.js to the webView
-	 */
-	public SQLEditor() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SQLEditor.fxml"));
-		fxmlLoader.setRoot(this);
-		fxmlLoader.setController(this);
+  /**
+   * Initialize Layout with FXML and loads ace.js to the webView
+   */
+  public SQLEditor() {
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SQLEditor.fxml"));
+    fxmlLoader.setRoot(this);
+    fxmlLoader.setController(this);
 
-		try {
-			fxmlLoader.load();
-		} catch (IOException exception) {
-			throw new RuntimeException(exception);
-		}
+    try {
+      fxmlLoader.load();
+    } catch (IOException exception) {
+      throw new RuntimeException(exception);
+    }
 
-		engine = editor.getEngine();
+    engine = editor.getEngine();
 
-		engine.load(getClass().getResource("editor.html").toExternalForm());
-		
-		//Add hook solution to add Ctrl+V to the Javafx webView
-		editor.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
-	        if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.V){
-	            final Clipboard clipboard = Clipboard.getSystemClipboard();
-	            String content = (String) clipboard.getContent(DataFormat.PLAIN_TEXT);
-	            	            
-	            engine.executeScript(" pasteContent(\""+escapeNewLines(content)+"\") ");
-	        }
-	    });
+    engine.load(getClass().getResource("editor.html").toExternalForm());
+    
+    //Add hook solution to add Ctrl+V to the Javafx webView
+    editor.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+          if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.V){
+              final Clipboard clipboard = Clipboard.getSystemClipboard();
+              String content = (String) clipboard.getContent(DataFormat.PLAIN_TEXT);
+                            
+              engine.executeScript(" pasteContent(\""+escapeNewLines(content)+"\") ");
+          }
+      });
 
-	}
+  }
 
-	/**
-	 * @return code from sql editor
-	 */
-	public String getCode() {
-		return (String) engine.executeScript("editor.getValue()");
-	}
+  /**
+   * @return code from sql editor
+   */
+  public String getCode() {
+    return (String) engine.executeScript("editor.getValue()");
+  }
 
-	/**
-	 * Puts Code to the sql editor
-	 * @param code to paste to the sql editor
-	 */
-	public void pasteCode(String code) {
-		engine.executeScript("editor.setValue(\"" + escapeNewLines(code)+ "\");");
-	}
-	
-	private String escapeNewLines(String content) {
-		return content.replace("'", "\\'")
-        		.replace(System.getProperty("line.separator"), "\\n")
-        		.replace("\n", "\\n")
-        		.replace("\r", "\\n");
-	}
+  /**
+   * Puts Code to the sql editor
+   * @param code to paste to the sql editor
+   */
+  public void pasteCode(String code) {
+    engine.executeScript("editor.setValue(\"" + escapeNewLines(code)+ "\");");
+  }
+  
+  private String escapeNewLines(String content) {
+    return content.replace("'", "\\'")
+            .replace(System.getProperty("line.separator"), "\\n")
+            .replace("\n", "\\n")
+            .replace("\r", "\\n");
+  }
 
 }

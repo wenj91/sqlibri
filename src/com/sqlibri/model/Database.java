@@ -16,138 +16,138 @@ import com.sqlibri.util.PrettyStatus;
  */
 public class Database {
 
-	private final String GET_ALL_TABLES = "SELECT name FROM sqlite_master WHERE type='table';";
+  private final String GET_ALL_TABLES = "SELECT name FROM sqlite_master WHERE type='table';";
 
-	//path to database file
-	private File file;
+  //path to the database file
+  private File file;
 
-	/**
-	 * @return path to database file
-	 */
-	public File getFile() {
-		return file;
-	}
+  /**
+   * @return path to database file
+   */
+  public File getFile() {
+    return file;
+  }
 
-	/**
-	 * Initializes with path to database file
-	 * @param file path to database file
-	 */
-	public Database(File file) {
-		this.file = file;
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+  /**
+   * Initializes with path to database file
+   * @param file path to database file
+   */
+  public Database(File file) {
+    this.file = file;
+    try {
+      Class.forName("org.sqlite.JDBC");
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
 
-	/**
-	 * Creates database by given path
-	 * @throws SQLException throws if database cannot be created
-	 */
-	public void connect() throws SQLException {
-		Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
-		try {
-			connection.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+  /**
+   * Creates database by given path
+   * @throws SQLException throws if database cannot be created
+   */
+  public void connect() throws SQLException {
+    Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
+    try {
+      connection.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
-	/**
-	 * Drops database (current database file)
-	 */
-	public void drop() {
-		file.delete();
-	}
+  /**
+   * Drops database (current database file)
+   */
+  public void drop() {
+    file.delete();
+  }
 
-	/**
-	 * Get all tables from database
-	 * @return all tables
-	 */
-	public List<String> getAllTables() {
+  /**
+   * Get all tables from database
+   * @return all tables
+   */
+  public List<String> getAllTables() {
 
-		List<String> tables = new ArrayList<>();
+    List<String> tables = new ArrayList<>();
 
-		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery(GET_ALL_TABLES);) {
-			while (resultSet.next()) {
-				tables.add(resultSet.getString(1));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(GET_ALL_TABLES)) {
+      while (resultSet.next()) {
+        tables.add(resultSet.getString(1));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-		return tables;
-	}
+    return tables;
+  }
 
-	/**
-	 * Executes query 
-	 * @param query to execute
-	 * @return results from executed query
-	 * @throws SQLException throws if there is any error in sql query
-	 * @throws Exception throws if crap happen 
-	 */
-	public QueryResult executeQuery(String query) throws SQLException, Exception {
-		QueryResult queryResult = new QueryResult();
+  /**
+   * Executes query 
+   * @param query to execute
+   * @return results from executed query
+   * @throws SQLException throws if there is any error in sql query
+   * @throws Exception throws if crap happen 
+   */
+  public QueryResult executeQuery(String query) throws SQLException, Exception {
+    QueryResult queryResult = new QueryResult();
 
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
-		
-		query = query.replaceAll("\\s+", " ");
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    
+    query = query.replaceAll("\\s+", " ");
 
-		try {
+    try {
 
-			connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
-			statement = connection.createStatement();
+      connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
+      statement = connection.createStatement();
 
-			long start = System.currentTimeMillis();
-			if (isSelectQuery(query)) {
-				resultSet = statement.executeQuery(query);
-			} else {
-				statement.executeUpdate(query);
-			}
-			long end = System.currentTimeMillis();
+      long start = System.currentTimeMillis();
+      if (isSelectQuery(query)) {
+        resultSet = statement.executeQuery(query);
+      } else {
+        statement.executeUpdate(query);
+      }
+      long end = System.currentTimeMillis();
 
-			queryResult.setExecutionInfo(PrettyStatus.success(query, (end - start)));
+      queryResult.setExecutionInfo(PrettyStatus.success(query, (end - start)));
 
-			if (resultSet == null)
-				return queryResult;
+      if (resultSet == null)
+        return queryResult;
 
-			queryResult.setColumnNames(new ArrayList<String>());
-			int columns = resultSet.getMetaData().getColumnCount(); 
-			for (int i = 1; i <= columns; i++) {
-				queryResult.getColumnNames().add(resultSet.getMetaData().getColumnName(i));
-			}
+      queryResult.setColumnNames(new ArrayList<String>());
+      int columns = resultSet.getMetaData().getColumnCount(); 
+      for (int i = 1; i <= columns; i++) {
+        queryResult.getColumnNames().add(resultSet.getMetaData().getColumnName(i));
+      }
 
-			queryResult.setTableData(new ArrayList<>());
-			for (int row = 0; resultSet.next(); row++) {
-				queryResult.getTableData().add(new ArrayList<String>());
-				for (int column = 0;  column < columns; column++) {
-					queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
-				}
-			}
-		} catch(SQLException e) {
-			throw e;
-		} catch(Exception e) {
-			throw e;
-		}
-		finally {
-			if (isSelectQuery(query) && resultSet != null) 
-				resultSet.close();
-			
-			statement.close();
-			connection.close();
-		}
+      queryResult.setTableData(new ArrayList<>());
+      for (int row = 0; resultSet.next(); row++) {
+        queryResult.getTableData().add(new ArrayList<String>());
+        for (int column = 0;  column < columns; column++) {
+          queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
+        }
+      }
+    } catch(SQLException e) {
+      throw e;
+    } catch(Exception e) {
+      throw e;
+    }
+    finally {
+      if (isSelectQuery(query) && resultSet != null) 
+        resultSet.close();
+      
+      statement.close();
+      connection.close();
+    }
 
-		return queryResult;
-	}
+    return queryResult;
+  }
 
-	// Checks is query is 'SELECT' query
-	private boolean isSelectQuery(String query) {
-		return query.toUpperCase().matches("^\\s*SELECT.*$");
-	}
+  // Checks is query is 'SELECT' query
+  private boolean isSelectQuery(String query) {
+    return query.toUpperCase().matches("^\\s*SELECT.*$");
+  }
 
 }
