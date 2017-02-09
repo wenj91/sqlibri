@@ -3,12 +3,13 @@
 ![sqlibri-logo](https://raw.githubusercontent.com/Saka7/sqlibri/master/SQLibri.png)
 
 # SQLibri - the lightweight sqlite GUI client
-SQLibry is a platform independent SQLite GUI client. Which allows to work with this database easily and effectively.
+SQLibry is a platform independent SQLite GUI client.
 
 # Build and run
-Navigate to project parent folder and run `./gradlew build` on Unix-based OS or `gradle.bat build` on Windows to build the project, then `java -jar build/libs/sqlibri-[version].jar` to run it.
-> Note: To run this application you need Java SE 1.8.0_40+
-[Download Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- Navigate to project parent folder and run `gradle build` to build the project 
+- Then `gradle run` or `java -jar build/libs/sqlibri-[version].jar` to run it
+
+> Note: To run this application you need [Java SE 1.8.0_40+](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [Gradle 2+](https://gradle.org/install)
 
 # Getting started
 It this section we collect all information which is essential to figure out how to use the application. You can find this tutorial inside the application by pressing `CTRL/COMMAND+SHIFT+H` or find it in HELP -> USER GUIDE menu.

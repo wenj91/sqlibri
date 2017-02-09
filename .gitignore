@@ -1,9 +1,11 @@
-\bin
-\build
-\.gradle
-\.settings
-\.idea
+/bin
+/build
+/.gradle
+/gradle
+/.settings
+/.idea
 *.db
 *.sql
 *.csv
-/bin/
+gradlew*
+
