@@ -27,16 +27,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Main Stage controller contains all event handler for the main window
- * and it's responsible for handling all user interactions
+ * Main Stage presenter responsible for handling event on main layout
  */
-public class AppPersenter {
+public class AppPresenter {
 
   private final String DB_ICON = "com/sqlibri/resources/image/database.png";
   private final String TABLE_ICON = "com/sqlibri/resources/image/table.png";
@@ -54,90 +52,6 @@ public class AppPersenter {
   @FXML private Label statusBar;
   @FXML private ComboBox<String> commands;
 
-  // Shows up error dialog with the following message
-  private void showErrorDialog(String title, String content) {
-    Alert alert = new Alert(AlertType.ERROR);
-    alert.setTitle(title);
-    alert.setHeaderText(content);
-    alert.getDialogPane().setMaxSize(320, 640);
-    alert.showAndWait();
-  }
-
-  // Loads tables to the database structure tree view
-  private void loadTables(File database) {
-    Image rootImg = new Image(DB_ICON, 16, 16, false, false);
-    TreeItem<String> rootItem = new TreeItem<String>(database.getName(), new ImageView(rootImg));
-    rootItem.setExpanded(true);
-
-    Image tableImg = new Image(TABLE_ICON, 16, 16, false, false);
-
-    List<String> tables = new Database(database).getAllTables();
-
-    List<TreeItem<String>> tablesList = new ArrayList<>();
-    for (String table : tables) {
-      tablesList.add(new TreeItem<String>(table, new ImageView(tableImg)));
-    }
-
-    rootItem.getChildren().addAll(tablesList);
-    dbStructure.setRoot(rootItem);
-  }
-
-  // Deletes all content from database structure tree view
-  private void clearTables() {
-    dbStructure.setRoot(null);
-  }
-
-  // Loads database data to table view
-  private void loadTableView(QueryResult queryResult) {
-    table.getColumns().clear();
-    table.getItems().clear();
-
-    if (queryResult.getTableData().size() <= 0)
-      return;
-
-    ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-    for (int column = 0; column < queryResult.getColumnCount(); column++) {
-      final int j = column;
-
-      TableColumn<ObservableList<String>, String> col = new TableColumn<>(queryResult.getColumnNames().get(j));
-
-      col.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get(j).toString()));
-
-      table.getColumns().addAll(col);
-    }
-
-    for (int row = 0; row < queryResult.getRowCount(); row++) {
-      ObservableList<String> rowData = FXCollections.observableArrayList();
-      for (int column = 0; column < queryResult.getColumnCount(); column++) {
-        rowData.add(queryResult.getTableData().get(row).get(column).toString());
-      }
-      data.add(rowData);
-    }
-
-    table.setItems(data);
-
-  }
-  
-  // shows notification of query execution
-  private void showQueryExecutionNotification() {
-    final Tooltip tooltip = new Tooltip();
-    final String notification = statusBar.getText();
-    if(notification != null && !notification.isEmpty()) {
-      tooltip.setAutoHide(true);
-      tooltip.setText(notification);
-      double xPosition = window.getX() + 5;
-      double yPosition = window.getY() + window.getHeight() - 35;
-      tooltip.show(window, xPosition, yPosition);
-    }
-  }
-  
-  
-  // adds query to commands combobox
-  private void addToCommandsHistory(String command) {
-    final ObservableList<String> listOfCommands = commands.getItems();
-    if(!listOfCommands.contains(command.replaceAll("\\s*", ""))) 
-      listOfCommands.add(0, command);
-  }
 
   /**
    * Setter for primary stage field,
@@ -153,24 +67,19 @@ public class AppPersenter {
         execute();
     });
     
-    commands.valueProperty().addListener(e -> {
-      editor.pasteCode(commands.getSelectionModel().getSelectedItem());
-    });
+    commands.valueProperty().addListener(e -> editor.pasteCode(commands.getSelectionModel().getSelectedItem()));
   }
 
-  // Database menu item event handlers
   /**
    * Create database event handler [Database -> create or Ctrl+N]
    * Creates empty database file on the given path
    */
   @FXML public void createDb() {
-
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Create Database File");
     File file = fileChooser.showSaveDialog(window);
 
-    if (file == null)
-      return;
+    if (file == null) return;
 
     db = new Database(file);
 
@@ -190,12 +99,11 @@ public class AppPersenter {
    * Drops opened database
    */
   @FXML public void dropDb() {
-    if (db == null || db.getFile() == null)
-      return;
+    if (db == null || db.getFile() == null) return;
 
     Alert alert = new Alert(AlertType.CONFIRMATION);
     alert.setTitle("DROP DATABASE");
-    alert.setHeaderText("Are you really want to drop the database?");
+    alert.setHeaderText("Do you really want to drop the database?");
 
     Optional<ButtonType> result = alert.showAndWait();
     if (result.get() == ButtonType.OK) {
@@ -230,8 +138,7 @@ public class AppPersenter {
     fileChooser.setTitle("Open Database File");
     File file = fileChooser.showSaveDialog(window);
 
-    if (file == null)
-      return;
+    if (file == null) return;
 
     try {
       Files.copy(db.getFile().toPath(), file.toPath());
@@ -242,7 +149,6 @@ public class AppPersenter {
     }
   }
 
-  // File menu item event handlers
   /**
    * Save Query event handler [File -> Save Query or Ctrl+S]
    * Saves query from SQL editor to given file
@@ -252,8 +158,7 @@ public class AppPersenter {
     fileChooser.setTitle("Save Query");
     File file = fileChooser.showSaveDialog(window);
 
-    if (file == null)
-      return;
+    if (file == null) return;
 
     try {
       Files.write(file.toPath(), editor.getCode().getBytes());
@@ -274,8 +179,7 @@ public class AppPersenter {
     fileChooser.setTitle("Open Query File");
     File file = fileChooser.showOpenDialog(window);
 
-    if (file == null)
-      return;
+    if (file == null) return;
 
     String query = "";
 
@@ -304,8 +208,8 @@ public class AppPersenter {
 
     try {
       Files.write(file.toPath(),
-          CSVParser.parseToCSV(lastResult.getColumnNames(),
-              lastResult.getTableData()).getBytes());
+        CSVParser.parseToCSV(lastResult.getColumnNames(),
+        lastResult.getTableData()).getBytes());
     } catch (IOException e) {
       showErrorDialog("FILE IO ERROR:", e.getMessage());
     } catch (Exception e) {
@@ -356,12 +260,10 @@ public class AppPersenter {
         showQueryExecutionNotification();
       }
     }
-
   }
 
-  // Help menu item event handlers
   /**
-   * User Guide event handler [Help -> User GUide or Ctrl+Shift+H]
+   * User Guide event handler [Help -> User Guide or Ctrl+Shift+H]
    * Opens User Guide stage
    */
   @FXML public void showUserGuide() {
@@ -392,8 +294,86 @@ public class AppPersenter {
     about.setScene(new Scene(aboutPane));
     about.setTitle("About");
     about.setResizable(false);
-
     about.show();
+  }
+
+  // Shows up error dialog with the following message
+  private void showErrorDialog(String title, String content) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setHeaderText(content);
+    alert.getDialogPane().setMaxSize(320, 640);
+    alert.showAndWait();
+  }
+
+  // Loads tables to the database structure tree view
+  private void loadTables(File database) {
+    Image rootImg = new Image(DB_ICON, 16, 16, false, false);
+    TreeItem<String> rootItem = new TreeItem<>(database.getName(), new ImageView(rootImg));
+    rootItem.setExpanded(true);
+    Image tableImg = new Image(TABLE_ICON, 16, 16, false, false);
+    List<String> tables = new Database(database).getAllTables();
+
+    List<TreeItem<String>> tablesList = tables
+        .stream()
+        .map(table -> new TreeItem<>(table, new ImageView(tableImg)))
+        .collect(Collectors.toList());
+
+    rootItem.getChildren().addAll(tablesList);
+    dbStructure.setRoot(rootItem);
+  }
+
+  // Deletes all content from database structure tree view
+  private void clearTables() {
+    dbStructure.setRoot(null);
+  }
+
+  // Loads database data to table view
+  private void loadTableView(QueryResult queryResult) {
+    table.getColumns().clear();
+    table.getItems().clear();
+
+    if (queryResult.getTableData().size() <= 0) return;
+
+    ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
+    for (int column = 0; column < queryResult.getColumnCount(); column++) {
+      final int j = column;
+      TableColumn<ObservableList<String>, String> col = new TableColumn<>(queryResult.getColumnNames().get(j));
+      col.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get(j)));
+      table.getColumns().addAll(col);
+    }
+
+    for (int row = 0; row < queryResult.getRowCount(); row++) {
+      ObservableList<String> rowData = FXCollections.observableArrayList();
+      for (int column = 0; column < queryResult.getColumnCount(); column++) {
+        rowData.add(queryResult.getTableData().get(row).get(column));
+      }
+      data.add(rowData);
+    }
+
+    table.setItems(data);
+  }
+
+  // shows notification of query execution
+  private void showQueryExecutionNotification() {
+    final Tooltip tooltip = new Tooltip();
+    final String notification = statusBar.getText();
+    if(notification != null && !notification.isEmpty()) {
+      tooltip.setAutoHide(true);
+      tooltip.setText(notification);
+      double xPosition = window.getX() + 5;
+      double yPosition = window.getY() + window.getHeight() - 35;
+      tooltip.show(window, xPosition, yPosition);
+    }
+  }
+
+
+  // adds query to commands combo-box
+  private void addToCommandsHistory(String command) {
+    final ObservableList<String> listOfCommands = commands.getItems();
+    if(!listOfCommands.contains(command.replaceAll("\\s*", ""))) {
+      listOfCommands.add(0, command);
+    }
   }
 
 }

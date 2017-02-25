@@ -1,15 +1,11 @@
 package com.sqlibri.model;
 
+import com.sqlibri.util.PrettyStatus;
+
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sqlibri.util.PrettyStatus;
 
 /**
  * All essential operations for working with database
@@ -22,14 +18,14 @@ public class Database {
   private File file;
 
   /**
-   * @return path to database file
+   * @return path to the database file
    */
   public File getFile() {
     return file;
   }
 
   /**
-   * Initializes with path to database file
+   * Initializes with path to the database file
    * @param file path to database file
    */
   public Database(File file) {
@@ -89,58 +85,46 @@ public class Database {
    * @throws SQLException throws if there is any error in sql query
    * @throws Exception throws if crap happen 
    */
-  public QueryResult executeQuery(String query) throws SQLException, Exception {
+  public QueryResult executeQuery(String query) throws Exception, SQLException {
     QueryResult queryResult = new QueryResult();
-
-    Connection connection = null;
-    Statement statement = null;
     ResultSet resultSet = null;
-    
     query = query.replaceAll("\\s+", " ");
 
-    try {
+    try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
+        Statement statement = connection.createStatement()) {
 
-      connection = DriverManager.getConnection("jdbc:sqlite:" + file.toString());
-      statement = connection.createStatement();
-
-      long start = System.currentTimeMillis();
-      if (isSelectQuery(query)) {
-        resultSet = statement.executeQuery(query);
-      } else {
-        statement.executeUpdate(query);
-      }
-      long end = System.currentTimeMillis();
-
-      queryResult.setExecutionInfo(PrettyStatus.success(query, (end - start)));
-
-      if (resultSet == null)
-        return queryResult;
-
-      queryResult.setColumnNames(new ArrayList<String>());
-      int columns = resultSet.getMetaData().getColumnCount(); 
-      for (int i = 1; i <= columns; i++) {
-        queryResult.getColumnNames().add(resultSet.getMetaData().getColumnName(i));
-      }
-
-      queryResult.setTableData(new ArrayList<>());
-      for (int row = 0; resultSet.next(); row++) {
-        queryResult.getTableData().add(new ArrayList<String>());
-        for (int column = 0;  column < columns; column++) {
-          queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
+        long start = System.currentTimeMillis();
+        if (isSelectQuery(query)) {
+            resultSet = statement.executeQuery(query);
+        } else {
+            statement.executeUpdate(query);
         }
+        long end = System.currentTimeMillis();
+
+        queryResult.setExecutionInfo(PrettyStatus.success(query, (end - start)));
+
+        if (resultSet == null) return queryResult;
+
+        queryResult.setColumnNames(new ArrayList<>());
+        int columns = resultSet.getMetaData().getColumnCount();
+        for (int i = 1; i <= columns; i++) {
+            queryResult.getColumnNames().add(resultSet.getMetaData().getColumnName(i));
+        }
+
+        queryResult.setTableData(new ArrayList<>());
+        for (int row = 0; resultSet.next(); row++) {
+            queryResult.getTableData().add(new ArrayList<>());
+            for (int column = 0; column < columns; column++) {
+                queryResult.getTableData().get(row).add(resultSet.getString(column + 1));
+            }
+        }
+      } catch (SQLException e) {
+          throw e;
+      } catch (Exception e) {
+          throw e;
+      } finally {
+          if (isSelectQuery(query) && resultSet != null) resultSet.close();
       }
-    } catch(SQLException e) {
-      throw e;
-    } catch(Exception e) {
-      throw e;
-    }
-    finally {
-      if (isSelectQuery(query) && resultSet != null) 
-        resultSet.close();
-      
-      statement.close();
-      connection.close();
-    }
 
     return queryResult;
   }

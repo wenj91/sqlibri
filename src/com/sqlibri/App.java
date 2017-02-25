@@ -1,9 +1,6 @@
 package com.sqlibri;
 
-import java.net.URL;
-
-import com.sqlibri.presenter.AppPersenter;
-
+import com.sqlibri.presenter.AppPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,9 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-/**
- * Main class - launches the application
- */
+import java.net.URL;
+
+/** Main class - launches the application */
 public class App extends Application {
 
   // Application Icon
@@ -36,7 +33,7 @@ public class App extends Application {
       Scene scene = new Scene(root);
       primaryStage.setScene(scene);
 
-      AppPersenter controller = (AppPersenter) loader.getController();
+      AppPresenter controller = loader.getController();
       controller.init(primaryStage);
 
       primaryStage.setTitle(TITLE);

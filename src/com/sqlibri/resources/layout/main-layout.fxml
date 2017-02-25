@@ -3,17 +3,15 @@
 <?import javafx.scene.input.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import com.sqlibri.control.editor.SQLEditor?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
   minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
   prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="com.sqlibri.presenter.AppPersenter">
+  fx:controller="com.sqlibri.presenter.AppPresenter">
   <bottom>
     <HBox prefHeight="18.0" prefWidth="600.0" BorderPane.alignment="CENTER">
       <children>

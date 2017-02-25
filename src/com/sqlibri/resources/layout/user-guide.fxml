@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<Accordion expandedPane="$getting_started" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="400.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Accordion
+   expandedPane="$getting_started"
+   maxHeight="-Infinity"
+   maxWidth="-Infinity"
+   minHeight="-Infinity"
+   minWidth="-Infinity"
+   prefHeight="400.0"
+   prefWidth="680.0"
+   xmlns="http://javafx.com/javafx/8"
+   xmlns:fx="http://javafx.com/fxml/1">
   <panes>
+
   <TitledPane fx:id="getting_started" contentDisplay="CENTER" text="Getting Started">
       <content>
         <StackPane prefHeight="374.0" prefWidth="581.0">

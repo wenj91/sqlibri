@@ -12,13 +12,7 @@ public class PrettyStatus {
    */
   public static String error(String query) {
     if(query.isEmpty()) return "Empty";
-    StringBuilder result = new StringBuilder();
-
-    result.append("SQL Error in query '");
-    result.append(shortenQuery(query));
-    result.append("'");
-    
-    return result.toString();
+     return "SQL Error in query '" + shortenQuery(query) + "'";
   }
 
   /**
@@ -49,10 +43,8 @@ public class PrettyStatus {
    */
   private static String shortenQuery(String query) {
     query = query.replaceAll("^\\s*", "");
-    if(query.length() > 20) 
-      return query.substring(0, 20) + "...";
-    else
-      return query;
+    if(query.length() > 20) return query.substring(0, 20) + "...";
+    else return query;
   }
 
 }
