@@ -1,4 +1,6 @@
 ![version](https://raw.githubusercontent.com/Saka7/sqlibri/master/src/com/sqlibri/resources/image/version.png)
+[![Code Climate](https://codeclimate.com/github/Saka7/sqlibri/badges/gpa.svg)](https://codeclimate.com/github/Saka7/sqlibri)
+[![Issue Count](https://codeclimate.com/github/Saka7/sqlibri/badges/issue_count.svg)](https://codeclimate.com/github/Saka7/sqlibri)
 
 ![sqlibri-logo](https://raw.githubusercontent.com/Saka7/sqlibri/master/SQLibri.png)
 
